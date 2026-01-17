@@ -1,0 +1,21 @@
+# Core Framework
+Flask
+flask-cors
+python-dotenv
+
+# Database
+SQLAlchemy
+alembic
+
+# Validation
+pydantic
+pydantic-settings
+
+# Testing
+pytest
+pytest-cov
+faker
+
+# Development
+black
+flake8
