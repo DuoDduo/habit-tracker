@@ -400,6 +400,11 @@ Opens `htmlcov/index.html` with coverage report (Target: >90%)
 ---
 
 ## 📡 API Documentation
+The backend features interactive API documentation powered by Swagger (Flasgger). This allows you to test all endpoints (CRUD & Analytics) directly from your browser, providing a "FastAPI-like" development experience.
+
+Interactive UI: http://localhost:5000/apidocs
+
+Spec JSON: http://localhost:5000/apispec_1.json
 
 ### Base URL
 
