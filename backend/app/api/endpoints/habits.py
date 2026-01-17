@@ -13,12 +13,23 @@ from datetime import datetime
 
 habits_bp = Blueprint("habits", __name__, url_prefix="/api/habits")
 
-
 @habits_bp.route("", methods=["GET"])
 def list_habits():
     """
-    GET /api/habits
     Get all habits with their current status.
+    ---
+    responses:
+      200:
+        description: A list of all habits and their current performance metrics
+        schema:
+          type: array
+          items:
+            properties:
+              habit_id: {type: integer}
+              name: {type: string}
+              periodicity: {type: string}
+              current_streak: {type: integer}
+              is_broken: {type: boolean}
     """
     try:
         db = next(get_db())
@@ -40,28 +51,35 @@ def list_habits():
         ]
         
         return jsonify(response), 200
-    
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-
 
 @habits_bp.route("", methods=["POST"])
 def create_habit():
     """
-    POST /api/habits
     Create a new habit.
-    
-    Request Body:
-    {
-        "name": "Drink Water",
-        "specification": "Drink 8 glasses",
-        "periodicity": "daily"
-    }
+    ---
+    parameters:
+      - name: body
+        in: body
+        required: true
+        schema:
+          id: HabitCreate
+          required:
+            - name
+            - periodicity
+          properties:
+            name: {type: string, example: "Read Bible"}
+            specification: {type: string, example: "Read 2 chapters"}
+            periodicity: {type: string, enum: [daily, weekly], example: "daily"}
+    responses:
+      201:
+        description: Habit successfully created
+      400:
+        description: Validation error
     """
     try:
         data = request.get_json()
-        
-        # Validate with Pydantic
         habit_data = HabitCreate(**data)
         
         db = next(get_db())
@@ -80,19 +98,26 @@ def create_habit():
         }
         
         return jsonify(response), 201
-    
     except ValidationError as e:
         return jsonify({"error": "Validation error", "details": e.errors()}), 400
-    
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-
 
 @habits_bp.route("/<int:habit_id>", methods=["GET"])
 def get_habit(habit_id: int):
     """
-    GET /api/habits/:id
     Get a specific habit by ID.
+    ---
+    parameters:
+      - name: habit_id
+        in: path
+        type: integer
+        required: true
+    responses:
+      200:
+        description: Detailed habit information including history
+      404:
+        description: Habit not found
     """
     try:
         db = next(get_db())
@@ -115,16 +140,24 @@ def get_habit(habit_id: int):
         }
         
         return jsonify(response), 200
-    
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-
 
 @habits_bp.route("/<int:habit_id>", methods=["DELETE"])
 def delete_habit(habit_id: int):
     """
-    DELETE /api/habits/:id
     Delete a habit and all its completions.
+    ---
+    parameters:
+      - name: habit_id
+        in: path
+        type: integer
+        required: true
+    responses:
+      200:
+        description: Habit deleted successfully
+      404:
+        description: Habit not found
     """
     try:
         db = next(get_db())
@@ -134,21 +167,29 @@ def delete_habit(habit_id: int):
             return jsonify({"error": "Habit not found"}), 404
         
         return jsonify({"message": "Habit deleted successfully"}), 200
-    
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-
 
 @habits_bp.route("/<int:habit_id>/check-off", methods=["POST"])
 def check_off_habit(habit_id: int):
     """
-    POST /api/habits/:id/check-off
-    Mark a habit as completed for now (or specified time).
-    
-    Optional Request Body:
-    {
-        "timestamp": "2024-01-15T10:30:00"  // ISO format
-    }
+    Mark a habit as completed.
+    ---
+    parameters:
+      - name: habit_id
+        in: path
+        type: integer
+        required: true
+      - name: body
+        in: body
+        schema:
+          properties:
+            timestamp: {type: string, format: date-time, example: "2026-01-17T10:30:00"}
+    responses:
+      200:
+        description: Habit checked off and streak updated
+      404:
+        description: Habit not found
     """
     try:
         data = request.get_json() or {}
@@ -176,6 +217,5 @@ def check_off_habit(habit_id: int):
         }
         
         return jsonify(response), 200
-    
     except Exception as e:
         return jsonify({"error": str(e)}), 500

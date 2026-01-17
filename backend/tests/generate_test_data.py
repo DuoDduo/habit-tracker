@@ -23,11 +23,11 @@ from app.models.habit import Habit, Completion
 
 def clear_database(db):
     """Clear all existing data"""
-    print("🗑️  Clearing existing data...")
+    print("Clearing existing data...")
     db.query(Completion).delete()
     db.query(Habit).delete()
     db.commit()
-    print("✅ Database cleared")
+    print("Database cleared")
 
 
 def create_predefined_habits(db):
@@ -77,7 +77,7 @@ def create_predefined_habits(db):
     
     created_habits = []
     
-    print("\n📝 Creating predefined habits...")
+    print("\nCreating predefined habits...")
     for data in habits_data:
         habit = Habit(
             name=data["name"],
@@ -96,7 +96,7 @@ def create_predefined_habits(db):
             "description": data["description"]
         })
         
-        print(f"✅ Created: {habit.name} ({habit.periodicity}) - {data['description']}")
+        print(f"Created: {habit.name} ({habit.periodicity}) - {data['description']}")
     
     return created_habits
 
@@ -111,7 +111,7 @@ def generate_completions(db, habit_data_list):
     """
     start_date = datetime.now() - timedelta(days=28)
     
-    print("\n📊 Generating 4 weeks of completion data...")
+    print("\nGenerating 4 weeks of completion data...")
     
     total_completions = 0
     
@@ -165,7 +165,7 @@ def generate_completions(db, habit_data_list):
         
         print(f"   {habit.name}: {completions_count} completions")
     
-    print(f"\n✅ Total completions generated: {total_completions}")
+    print(f"\nTotal completions generated: {total_completions}")
 
 
 def display_summary(db):
@@ -173,10 +173,10 @@ def display_summary(db):
     habits = db.query(Habit).all()
     
     print("\n" + "=" * 60)
-    print("📈 HABIT TRACKER - TEST DATA SUMMARY")
+    print("HABIT TRACKER - TEST DATA SUMMARY")
     print("=" * 60)
     
-    print(f"\n📊 Total Habits: {len(habits)}")
+    print(f"\nTotal Habits: {len(habits)}")
     
     daily_count = len([h for h in habits if h.periodicity == "daily"])
     weekly_count = len([h for h in habits if h.periodicity == "weekly"])
@@ -184,7 +184,7 @@ def display_summary(db):
     print(f"   • Daily habits: {daily_count}")
     print(f"   • Weekly habits: {weekly_count}")
     
-    print("\n🔥 Habit Details:")
+    print("\n Habit Details:")
     print("-" * 60)
     
     for habit in habits:
@@ -193,7 +193,7 @@ def display_summary(db):
         is_broken = habit.is_broken()
         completion_count = len(habit.completions)
         
-        status = "❌ Broken" if is_broken else "✅ Active"
+        status = "Broken" if is_broken else "Active"
         
         print(f"\n{habit.name} ({habit.periodicity})")
         print(f"   Current Streak: {current_streak}")
@@ -206,23 +206,23 @@ def display_summary(db):
     longest_overall = max(all_streaks) if all_streaks else 0
     
     print("\n" + "-" * 60)
-    print(f"🏆 Longest Streak Overall: {longest_overall}")
+    print(f"Longest Streak Overall: {longest_overall}")
     print("=" * 60)
 
 
 def main():
     """Main function to generate all test data"""
     print("\n" + "=" * 60)
-    print("🚀 HABIT TRACKER - TEST DATA GENERATOR")
+    print("HABIT TRACKER - TEST DATA GENERATOR")
     print("=" * 60)
     print("Author: Blessing Oluwapelumi James")
     print("Matric No: 92134091")
     print("=" * 60)
     
     # Initialize database
-    print("\n🔧 Initializing database...")
+    print("\nInitializing database...")
     init_db()
-    print("✅ Database initialized")
+    print("Database initialized")
     
     # Create session
     db = SessionLocal()
@@ -240,15 +240,15 @@ def main():
         # Display summary
         display_summary(db)
         
-        print("\n✅ Test data generation complete!")
-        print("🎉 You can now start the application and see the data")
+        print("\nTest data generation complete!")
+        print("You can now start the application and see the data")
         print("\nNext steps:")
         print("  1. Run: python run.py")
         print("  2. Open frontend in browser")
         print("  3. Explore the 5 predefined habits\n")
         
     except Exception as e:
-        print(f"\n❌ Error generating test data: {e}")
+        print(f"\nError generating test data: {e}")
         db.rollback()
         raise
     

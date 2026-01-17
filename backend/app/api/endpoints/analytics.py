@@ -15,13 +15,18 @@ analytics_bp = Blueprint("analytics", __name__, url_prefix="/api/analytics")
 @analytics_bp.route("/longest-streak", methods=["GET"])
 def longest_streak():
     """
-    GET /api/analytics/longest-streak
     Get the longest streak across all habits.
-    
-    Response:
-    {
-        "longest_streak": 21
-    }
+    ---
+    tags:
+      - Analytics
+    responses:
+      200:
+        description: The highest streak count achieved among all tracked habits
+        schema:
+          properties:
+            longest_streak:
+              type: integer
+              example: 21
     """
     try:
         db = next(get_db())
@@ -39,20 +44,29 @@ def longest_streak():
 @analytics_bp.route("/by-periodicity", methods=["GET"])
 def habits_by_periodicity():
     """
-    GET /api/analytics/by-periodicity?period=daily
     Get habits filtered by periodicity.
-    
-    Query Parameters:
-        period: "daily" or "weekly"
-    
-    Response:
-    [
-        {
-            "habit_id": 1,
-            "name": "Drink Water",
-            ...
-        }
-    ]
+    ---
+    tags:
+      - Analytics
+    parameters:
+      - name: period
+        in: query
+        type: string
+        enum: ['daily', 'weekly']
+        required: false
+        default: daily
+        description: Filter habits by their frequency
+    responses:
+      200:
+        description: A list of habits matching the specified period
+        schema:
+          type: array
+          items:
+            properties:
+              habit_id: {type: integer}
+              name: {type: string}
+              periodicity: {type: string}
+              current_streak: {type: integer}
     """
     try:
         period = request.args.get("period", "daily")
@@ -90,13 +104,20 @@ def habits_by_periodicity():
 @analytics_bp.route("/tracked-habits", methods=["GET"])
 def tracked_habits():
     """
-    GET /api/analytics/tracked-habits
     Get list of all tracked habit names.
-    
-    Response:
-    {
-        "habits": ["Drink Water", "Exercise", "Read Book"]
-    }
+    ---
+    tags:
+      - Analytics
+    responses:
+      200:
+        description: An array containing the names of all active habits
+        schema:
+          properties:
+            habits:
+              type: array
+              items:
+                type: string
+                example: ["Drink Water", "Exercise"]
     """
     try:
         db = next(get_db())
@@ -114,21 +135,20 @@ def tracked_habits():
 @analytics_bp.route("/struggling", methods=["GET"])
 def struggling_habits():
     """
-    GET /api/analytics/struggling?threshold=3
     Get habits with current streak below threshold.
-    
-    Query Parameters:
-        threshold: Minimum streak (default: 3)
-    
-    Response:
-    [
-        {
-            "habit_id": 2,
-            "name": "Exercise",
-            "current_streak": 1,
-            ...
-        }
-    ]
+    ---
+    tags:
+      - Analytics
+    parameters:
+      - name: threshold
+        in: query
+        type: integer
+        required: false
+        default: 3
+        description: Minimum streak count to NOT be considered struggling
+    responses:
+      200:
+        description: List of habits currently underperforming
     """
     try:
         threshold = int(request.args.get("threshold", 3))
@@ -161,18 +181,21 @@ def struggling_habits():
 @analytics_bp.route("/summary", methods=["GET"])
 def analytics_summary():
     """
-    GET /api/analytics/summary
     Get comprehensive analytics summary.
-    
-    Response:
-    {
-        "total_habits": 5,
-        "daily_habits": 4,
-        "weekly_habits": 1,
-        "longest_streak": 21,
-        "active_streaks": 3,
-        "broken_habits": 2
-    }
+    ---
+    tags:
+      - Analytics
+    responses:
+      200:
+        description: Consolidated metrics for the dashboard
+        schema:
+          properties:
+            total_habits: {type: integer}
+            daily_habits: {type: integer}
+            weekly_habits: {type: integer}
+            longest_streak: {type: integer}
+            active_streaks: {type: integer}
+            broken_habits: {type: integer}
     """
     try:
         db = next(get_db())
