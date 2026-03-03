@@ -6,6 +6,9 @@ Matric No: 92134091
 
 from sqlalchemy import create_engine, event
 from sqlalchemy.orm import sessionmaker, Session
+from typing import Generator
+from contextlib import contextmanager
+
 from app.core.config import settings
 from app.db.base import Base
 import os
@@ -49,10 +52,10 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 def init_db():
     """Create all tables in the database"""
     Base.metadata.create_all(bind=engine)
-    print("✅ Database tables created successfully")
-
-
-def get_db() -> Session:
+    print("Database tables created successfully")
+ 
+@contextmanager    
+def get_db():
     """
     Dependency to get database session.
     Yields a session and ensures it's closed after use.

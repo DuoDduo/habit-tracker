@@ -2,8 +2,14 @@
 Analytics Service - Functional Programming Approach
 Author: Blessing Oluwapelumi James
 Matric No: 92134091
+This module implements analytics using PURE FUNCTIONAL PROGRAMMING.
+All functions are pure: no side effects, same input = same output.
 
-All functions are PURE - no side effects, same input = same output
+Functional Programming Principles Demonstrated:
+- Pure functions
+- Immutability
+- Higher-order functions (filter, map, max)
+- No side effects
 """
 
 from typing import List
@@ -13,7 +19,8 @@ from app.models.habit import Habit
 class AnalyticsService:
     """
     Analytics service using functional programming paradigm.
-    All methods are static and pure functions.
+    All methods are static and pure functions that don't modify input.
+    They use Python's built-in functional programming features.
     """
     
     @staticmethod
@@ -48,6 +55,7 @@ class AnalyticsService:
         if not habits:
             return 0
         
+        # Use map to apply function to all habits
         streaks = map(lambda h: h.calculate_longest_streak(), habits)
         return max(streaks, default=0)
     
@@ -84,7 +92,7 @@ class AnalyticsService:
         """
         Find habits with current streak below threshold.
         
-        Uses filter() with lambda.
+        Uses filter() with lambda to find habits needing attention.
         
         Args:
             habits: List of Habit objects
@@ -103,6 +111,7 @@ class AnalyticsService:
     def count_by_periodicity(habits: List[Habit]) -> dict:
         """
         Count habits by periodicity.
+        Uses filter() to separate daily and weekly habits.
         
         Args:
             habits: List of Habit objects

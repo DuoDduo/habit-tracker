@@ -19,3 +19,5 @@ faker
 # Development
 black
 flake8
+
+python-dateutil

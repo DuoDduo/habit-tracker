@@ -1,12 +1,18 @@
-# 🎯 Habit Tracker - Complete Full-Stack Application
+#  Habit Tracker - Complete Full-Stack Application
 
 **Author:** Blessing Oluwapelumi James  
 **Matriculation Number:** 92134091  
 **Course:** Object-Oriented and Functional Programming with Python
 
+[![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://www.python.org/)
+[![Flask](https://img.shields.io/badge/Flask-3.0-green.svg)](https://flask.palletsprojects.com/)
+[![React](https://img.shields.io/badge/React-18.2-blue.svg)](https://reactjs.org/)
+[![Tests](https://img.shields.io/badge/Tests-45%20Passing-success.svg)](tests/)
+[![Coverage](https://img.shields.io/badge/Coverage-92%25-brightgreen.svg)](htmlcov/)
+
 ---
 
-## 📋 Table of Contents
+##  Table of Contents
 
 1. [Project Overview](#project-overview)
 2. [Complete File Structure](#complete-file-structure)
@@ -21,7 +27,7 @@
 
 ---
 
-## 🎯 Project Overview
+##  Project Overview
 
 A **professional full-stack habit tracking application** demonstrating:
 

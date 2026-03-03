@@ -2,6 +2,8 @@
 Pytest Configuration and Fixtures
 Author: Blessing Oluwapelumi James
 Matric No: 92134091
+
+This file provides reusable test fixtures for all tests.
 """
 
 import pytest
@@ -15,17 +17,22 @@ from datetime import datetime, timedelta
 
 @pytest.fixture(scope="function")
 def test_db():
-    """Create a test database for each test function"""
+    """
+    Create a test database for each test function
+    This ensures tests are isolated and don't affect each other.
+    """
+     # Create in-memory SQLite database
     engine = create_engine("sqlite:///:memory:")
     Base.metadata.create_all(engine)
     
+    # Create session
     SessionLocal = sessionmaker(bind=engine)
-    db = SessionLocal()
+    with SessionLocal() as db:
+     yield db
     
-    yield db
-    
-    db.close()
+    # Cleanup
     Base.metadata.drop_all(engine)
+    engine.dispose()
 
 
 @pytest.fixture(scope="function")

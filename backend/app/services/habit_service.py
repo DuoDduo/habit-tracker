@@ -18,30 +18,32 @@ class HabitService:
     """
     
     @staticmethod
-    def create_habit(db: Session, habit_data: HabitCreate) -> Habit:
-        """
-        Create a new habit.
-        
-        Args:
-            db: Database session
-            habit_data: Validated habit creation data
+    def create_habit(db: Session, name: str, specification: str, periodicity: str) -> Habit:
+            """
+            Create a new habit.
             
-        Returns:
-            Created Habit instance
-        """
-        habit = Habit(
-            name=habit_data.name,
-            specification=habit_data.specification,
-            periodicity=habit_data.periodicity,
-            created_at=datetime.now()
-        )
+            Args:
+                db: Database session
+                name: Habit name
+                specification: Task description
+                periodicity: "daily" or "weekly"
+                
+            Returns:
+                Created Habit instance
+            """
+            habit = Habit(
+                name=name,
+                specification=specification,
+                periodicity=periodicity,
+                created_at=datetime.now()
+            )
+            
+            db.add(habit)
+            db.commit()
+            db.refresh(habit)
+            
+            return habit
         
-        db.add(habit)
-        db.commit()
-        db.refresh(habit)
-        
-        return habit
-    
     @staticmethod
     def get_all_habits(db: Session) -> List[Habit]:
         """
@@ -65,7 +67,7 @@ class HabitService:
             habit_id: ID of the habit
             
         Returns:
-            Habit instance or None
+            Habit instance or None if not found
         """
         return db.query(Habit).filter(Habit.habit_id == habit_id).first()
     
@@ -102,7 +104,7 @@ class HabitService:
             timestamp: Completion time (defaults to now)
             
         Returns:
-            Updated Habit instance or None
+            Updated Habit instance or None if not found
         """
         habit = db.query(Habit).filter(Habit.habit_id == habit_id).first()
         
@@ -118,4 +120,15 @@ class HabitService:
         db.commit()
         db.refresh(habit)
         
+        return habit
+    
+    @staticmethod
+    def update_habit(db: Session, habit_id: int, **kwargs) -> Optional[Habit]:
+        habit = db.query(Habit).filter(Habit.habit_id == habit_id).first()
+        if not habit:
+            return None
+        for key, value in kwargs.items():
+            setattr(habit, key, value)
+        db.commit()
+        db.refresh(habit)
         return habit

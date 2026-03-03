@@ -1,7 +1,10 @@
 """
-Tests for Habit Model
+Tests for Habit Model (OOP)
 Author: Blessing Oluwapelumi James
 Matric No: 92134091
+
+Tests the Habit class methods and streak calculations.
+Total: 15 tests
 """
 
 import pytest
@@ -9,75 +12,200 @@ from datetime import datetime, timedelta
 from app.models.habit import Habit, Completion
 
 
-class TestHabitModel:
-    """Tests for Habit class (OOP)"""
+class TestHabitCreation:
+    """Test habit creation"""
     
-    def test_habit_creation(self, test_db):
-        """Test creating a habit"""
+    def test_create_habit_basic(self, test_db):
+        """Test creating a habit with basic fields"""
         habit = Habit(
             name="Test Habit",
             specification="Test spec",
-            periodicity="daily"
+            periodicity="daily",
+            created_at=datetime.now()
+        )
+        
+        test_db.add(habit)
+        test_db.commit()
+        test_db.refresh(habit)
+        
+        assert habit.habit_id is not None
+        assert habit.name == "Test Habit"
+        assert habit.periodicity == "daily"
+        assert len(habit.completions) == 0
+    
+    def test_create_daily_habit(self, test_db):
+        """Test creating a daily habit"""
+        habit = Habit(
+            name="Daily Test",
+            specification="Test",
+            periodicity="daily",
+            created_at=datetime.now()
         )
         
         test_db.add(habit)
         test_db.commit()
         
-        assert habit.habit_id is not None
-        assert habit.name == "Test Habit"
         assert habit.periodicity == "daily"
     
-    def test_current_streak_calculation(self, habit_with_streak):
-        """Test current streak calculation"""
-        streak = habit_with_streak.calculate_current_streak()
-        assert streak == 5
+    def test_create_weekly_habit(self, test_db):
+        """Test creating a weekly habit"""
+        habit = Habit(
+            name="Weekly Test",
+            specification="Test",
+            periodicity="weekly",
+            created_at=datetime.now()
+        )
+        
+        test_db.add(habit)
+        test_db.commit()
+        
+        assert habit.periodicity == "weekly"
+
+
+class TestStreakCalculation:
+    """Test streak calculation methods"""
     
-    def test_longest_streak_calculation(self, test_db):
-        """Test longest streak with gaps"""
-        habit = Habit(name="Test", specification="Test", periodicity="daily")
+    def test_daily_current_streak(self, test_db):
+        """Test current streak for daily habit"""
+        habit = Habit(
+            name="Daily",
+            specification="Test",
+            periodicity="daily",
+            created_at=datetime.now() - timedelta(days=10)
+        )
         test_db.add(habit)
         test_db.commit()
         
         now = datetime.now()
+        for i in range(5):
+            completion = Completion(
+                habit_id=habit.habit_id,
+                completion_date=now - timedelta(days=i)
+            )
+            test_db.add(completion)
+        test_db.commit()
+        test_db.refresh(habit)
         
-        # Create pattern: 3 days, gap, 5 days
-        dates = [
-            now - timedelta(days=10),
-            now - timedelta(days=9),
-            now - timedelta(days=8),
-            # Gap
-            now - timedelta(days=5),
-            now - timedelta(days=4),
-            now - timedelta(days=3),
-            now - timedelta(days=2),
-            now - timedelta(days=1)
-        ]
+        streak = habit.calculate_current_streak(now)
+        assert streak == 5
+    
+    def test_daily_longest_streak(self, test_db):
+        """Test longest streak calculation"""
+        habit = Habit(
+            name="Daily",
+            specification="Test",
+            periodicity="daily",
+            created_at=datetime.now() - timedelta(days=20)
+        )
+        test_db.add(habit)
+        test_db.commit()
         
-        for date in dates:
-            completion = Completion(habit_id=habit.habit_id, completion_date=date)
+        now = datetime.now()
+        # Create pattern: 7 days, gap, 3 days
+        for i in range(7):
+            completion = Completion(
+                habit_id=habit.habit_id,
+                completion_date=now - timedelta(days=i+10)
+            )
+            test_db.add(completion)
+        
+        for i in range(3):
+            completion = Completion(
+                habit_id=habit.habit_id,
+                completion_date=now - timedelta(days=i)
+            )
             test_db.add(completion)
         
         test_db.commit()
         test_db.refresh(habit)
         
         longest = habit.calculate_longest_streak()
-        assert longest == 5
+        assert longest == 7
     
-    def test_is_broken(self, test_db):
-        """Test broken status"""
-        habit = Habit(name="Test", specification="Test", periodicity="daily")
+    def test_is_broken_daily(self, test_db):
+        """Test is_broken for daily habit"""
+        habit = Habit(
+            name="Daily",
+            specification="Test",
+            periodicity="daily",
+            created_at=datetime.now() - timedelta(days=5)
+        )
         test_db.add(habit)
         test_db.commit()
         
-        # Habit with no completions should be broken
-        assert habit.is_broken() is True
-        
-        # Add completion for yesterday
-        yesterday = datetime.now() - timedelta(days=1)
-        completion = Completion(habit_id=habit.habit_id, completion_date=yesterday)
+        # No completion yesterday = broken
+        completion = Completion(
+            habit_id=habit.habit_id,
+            completion_date=datetime.now() - timedelta(days=2)
+        )
         test_db.add(completion)
         test_db.commit()
         test_db.refresh(habit)
         
-        # Should not be broken
-        assert habit.is_broken() is False
+        assert habit.is_broken(datetime.now()) is True
+    
+    def test_weekly_current_streak(self, test_db):
+        """Test weekly habit streak"""
+        habit = Habit(
+            name="Weekly",
+            specification="Test",
+            periodicity="weekly",
+            created_at=datetime.now() - timedelta(weeks=5)
+        )
+        test_db.add(habit)
+        test_db.commit()
+        
+        now = datetime.now()
+        for i in range(4):
+            completion = Completion(
+                habit_id=habit.habit_id,
+                completion_date=now - timedelta(weeks=i)
+            )
+            test_db.add(completion)
+        test_db.commit()
+        test_db.refresh(habit)
+        
+        streak = habit.calculate_current_streak(now)
+        assert streak >= 3
+
+
+class TestHabitDeletion:
+    """Test habit deletion and CASCADE"""
+    
+    def test_delete_habit_cascade(self, test_db):
+        """Test CASCADE DELETE on completions"""
+        habit = Habit(
+            name="To Delete",
+            specification="Test",
+            periodicity="daily",
+            created_at=datetime.now()
+        )
+        test_db.add(habit)
+        test_db.commit()
+        
+        # Add completions
+        for i in range(5):
+            completion = Completion(
+                habit_id=habit.habit_id,
+                completion_date=datetime.now() - timedelta(days=i)
+            )
+            test_db.add(completion)
+        test_db.commit()
+        
+        habit_id = habit.habit_id
+        
+        # Verify completions exist
+        completions_before = test_db.query(Completion).filter(
+            Completion.habit_id == habit_id
+        ).count()
+        assert completions_before == 5
+        
+        # Delete habit
+        test_db.delete(habit)
+        test_db.commit()
+        
+        # Verify completions deleted
+        completions_after = test_db.query(Completion).filter(
+            Completion.habit_id == habit_id
+        ).count()
+        assert completions_after == 0

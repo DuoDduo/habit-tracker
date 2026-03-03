@@ -169,7 +169,10 @@ def generate_completions(db, habit_data_list):
 
 
 def display_summary(db):
-    """Display summary statistics"""
+    """Display summary statistics of generated data
+    Args: 
+        db: Database session
+    """
     habits = db.query(Habit).all()
     
     print("\n" + "=" * 60)

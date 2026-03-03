@@ -8,6 +8,8 @@ from app.main import create_app
 from app.core.config import settings
 from flasgger import Swagger  # 1. Import Swagger
 
+
+# Create Flask application instance
 app = create_app()
 Swagger(app) # 2. Initialize Swagger with default settings
 
