@@ -222,18 +222,30 @@ class Habit(Base):
             return not any(c.completion_date.date() == yesterday for c in self.completions)
         
         elif self.periodicity == "weekly":
-            # Check if completed last week
-            last_week = current_date - timedelta(weeks=1)
-            last_week_num = last_week.isocalendar()[1]
-            last_week_year = last_week.isocalendar()[0]
+            # Get current ISO year and week
+            current_year, current_week, _ = current_date.isocalendar()
             
-            return not any(
-                c.completion_date.isocalendar()[1] == last_week_num and
-                c.completion_date.isocalendar()[0] == last_week_year
+            # Get last week's ISO year and week
+            last_week_date = current_date - timedelta(weeks=1)
+            last_year, last_week, _ = last_week_date.isocalendar()
+            
+            # Collect all completion (year, week) pairs
+            completion_weeks = {
+                (c.completion_date.isocalendar()[0],
+                c.completion_date.isocalendar()[1])
                 for c in self.completions
-            )
-        
-        return False
+            }
+            
+            # If completed this week → NOT broken
+            if (current_year, current_week) in completion_weeks:
+                return False
+            
+            # If completed last week → NOT broken
+            if (last_year, last_week) in completion_weeks:
+                return False
+            
+            # Otherwise → broken
+            return True
 
 
 class Completion(Base):
