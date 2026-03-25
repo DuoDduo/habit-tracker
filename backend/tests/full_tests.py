@@ -21,9 +21,7 @@ from app.services.analytics_service import AnalyticsService
 from app.schemas.habit_schema import HabitCreate
 
 
-# ============================================================
 # SECTION 1: HABIT CREATION, EDITING & DELETION TESTS (10 tests)
-# ============================================================
 
 class TestHabitCreation:
     """Tests for creating habits"""
@@ -252,10 +250,8 @@ class TestHabitEditing:
         print("test_habit_service_delete PASSED")
 
 
-# ============================================================
 # SECTION 2: STREAK CALCULATION TESTS (12 tests)
 # Tests verify streak calculation respects periodicity
-# ============================================================
 
 class TestDailyStreakCalculation:
     """Tests for daily habit streak calculations"""
@@ -554,10 +550,9 @@ class TestWeeklyStreakCalculation:
         print("test_predefined_habits_streaks PASSED")
 
 
-# ============================================================
+
 # SECTION 3: ANALYTICS MODULE TESTS (15 tests)
 # All analytics functions tested
-# ============================================================
 
 class TestAnalyticsFilterByPeriodicity:
     """Tests for get_habits_by_periodicity() function"""
@@ -815,9 +810,8 @@ class TestAnalyticsCount:
         print("test_count_empty_habits PASSED")
 
 
-# ============================================================
+
 # SECTION 4: API ENDPOINT TESTS (8 tests)
-# ============================================================
 
 class TestHabitsAPI:
     """Tests for habit API endpoints"""
@@ -935,9 +929,9 @@ class TestAnalyticsAPI:
         print("test_tracked_habits_endpoint PASSED")
 
 
-# ============================================================
+
 # TEST SUMMARY
-# ============================================================
+
 
 """
 TOTAL TESTS: 45

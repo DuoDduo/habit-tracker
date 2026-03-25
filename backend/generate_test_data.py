@@ -11,21 +11,31 @@ import sys
 import os
 from pathlib import Path
 
-# Add backend to path
+# Add backend folder to sys.path
+# Ensures we can import modules from the backend directory
 backend_path = Path(__file__).parent
 sys.path.insert(0, str(backend_path))
 
 from datetime import datetime, timedelta
 import random
+
+# Import database session and initializer
 from app.db.session import SessionLocal, init_db
+
+# Import Habit and Completion models
 from app.models.habit import Habit, Completion
 
 
 def clear_database(db):
-    """Clear all existing data"""
+    """
+    Clear all existing data from Habits and Completions tables.
+    
+    Args:
+        db: Database session
+    """
     print("Clearing existing data...")
-    db.query(Completion).delete()
-    db.query(Habit).delete()
+    db.query(Completion).delete()  # Delete all completion records
+    db.query(Habit).delete()       # Delete all habits
     db.commit()
     print("Database cleared")
 
@@ -34,8 +44,13 @@ def create_predefined_habits(db):
     """
     Create 5 predefined habits with different characteristics.
     
+    Each habit has a name, description, periodicity, and a completion rate.
+    
+    Args:
+        db: Database session
+        
     Returns:
-        List of created Habit objects
+        List of dicts containing created Habit objects and metadata
     """
     habits_data = [
         {
@@ -79,17 +94,19 @@ def create_predefined_habits(db):
     
     print("\nCreating predefined habits...")
     for data in habits_data:
+        # Create habit with creation date 4 weeks ago
         habit = Habit(
             name=data["name"],
             specification=data["specification"],
             periodicity=data["periodicity"],
-            created_at=datetime.now() - timedelta(days=28)  # Created 4 weeks ago
+            created_at=datetime.now() - timedelta(days=28)
         )
         
         db.add(habit)
         db.commit()
         db.refresh(habit)
         
+        # Store habit along with metadata for completion generation
         created_habits.append({
             "habit": habit,
             "completion_rate": data["completion_rate"],
@@ -105,11 +122,13 @@ def generate_completions(db, habit_data_list):
     """
     Generate 4 weeks of realistic completion data for each habit.
     
+    Completion times are randomized to simulate real behavior.
+    
     Args:
         db: Database session
-        habit_data_list: List of dicts with habit and completion_rate
+        habit_data_list: List of dicts with habit object and completion_rate
     """
-    start_date = datetime.now() - timedelta(days=28)
+    start_date = datetime.now() - timedelta(days=28)  # Start 4 weeks ago
     
     print("\nGenerating 4 weeks of completion data...")
     
@@ -125,7 +144,7 @@ def generate_completions(db, habit_data_list):
             # Generate daily completions for 28 days
             for day in range(28):
                 if random.random() < completion_rate:
-                    # Random time during the day
+                    # Randomize completion time during the day
                     completion_date = start_date + timedelta(days=day)
                     completion_date += timedelta(
                         hours=random.randint(6, 22),
@@ -144,8 +163,7 @@ def generate_completions(db, habit_data_list):
             # Generate weekly completions for 4 weeks
             for week in range(4):
                 if random.random() < completion_rate:
-                    # Random day in the week (0-6)
-                    day_in_week = random.randint(0, 6)
+                    day_in_week = random.randint(0, 6)  # Random day in week
                     completion_date = start_date + timedelta(weeks=week, days=day_in_week)
                     completion_date += timedelta(
                         hours=random.randint(9, 18),
@@ -160,6 +178,7 @@ def generate_completions(db, habit_data_list):
                     db.add(completion)
                     completions_count += 1
         
+        # Commit all completions for this habit
         db.commit()
         total_completions += completions_count
         
@@ -169,7 +188,9 @@ def generate_completions(db, habit_data_list):
 
 
 def display_summary(db):
-    """Display summary statistics of generated data
+    """
+    Display summary statistics of generated habits and completions.
+    
     Args: 
         db: Database session
     """
@@ -190,6 +211,7 @@ def display_summary(db):
     print("\n Habit Details:")
     print("-" * 60)
     
+    # Display stats for each habit
     for habit in habits:
         current_streak = habit.calculate_current_streak()
         longest_streak = habit.calculate_longest_streak()
@@ -214,7 +236,10 @@ def display_summary(db):
 
 
 def main():
-    """Main function to generate all test data"""
+    """
+    Main function to generate all test data.
+    Executes database initialization, habit creation, completions generation, and summary display.
+    """
     print("\n" + "=" * 60)
     print("HABIT TRACKER - TEST DATA GENERATOR")
     print("=" * 60)
@@ -227,20 +252,22 @@ def main():
     init_db()
     print("Database initialized")
     
-    # Create session
+    # Create a new session
     db = SessionLocal()
     
     try:
         # Clear existing data
         clear_database(db)
         
+    
         # Create predefined habits
         habit_data_list = create_predefined_habits(db)
         
-        # Generate completions
+
+        # Generate completions for each habit
         generate_completions(db, habit_data_list)
         
-        # Display summary
+        # Display summary statistics
         display_summary(db)
         
         print("\nTest data generation complete!")
@@ -251,13 +278,16 @@ def main():
         print("  3. Explore the 5 predefined habits\n")
         
     except Exception as e:
+        # Rollback session on error
         print(f"\nError generating test data: {e}")
         db.rollback()
         raise
     
     finally:
+        # Close session
         db.close()
 
 
+# Run main function if script is executed directly
 if __name__ == "__main__":
     main()

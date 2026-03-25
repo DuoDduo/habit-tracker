@@ -6,10 +6,19 @@ This module contains the Habit and Completion models using SQLAlchemy ORM.
 The Habit class demonstrates OOP principles with encapsulated data and behavior.
 """
 
+# Import necessary SQLAlchemy column types
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
+
+# Import relationship helper to define ORM relationships
 from sqlalchemy.orm import relationship
+
+# Import datetime utilities for timestamps and timedelta calculations
 from datetime import datetime, timedelta
+
+# Import List type hint
 from typing import List
+
+# Import Base declarative class for ORM models
 from app.db.base import Base
 
 
@@ -34,16 +43,31 @@ class Habit(Base):
         completions (List[Completion]): Related completion records
     """
     
+    # Define table name for ORM
     __tablename__ = "habits"
     
+
     # Columns
+    # Primary key, auto-incrementing integer
     habit_id = Column(Integer, primary_key=True, autoincrement=True)
+    
+    # Name of habit (max 255 characters), cannot be null
     name = Column(String(255), nullable=False)
+    
+    # Optional detailed description (max 500 characters)
     specification = Column(String(500))
-    periodicity = Column(String(20), nullable=False)  # "daily" or "weekly"
+    
+    # Habit periodicity, daily or weekly, cannot be null
+    periodicity = Column(String(20), nullable=False)
+    
+    # Timestamp of habit creation, defaults to UTC now, cannot be null
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
     
-    # Relationships with completions (One-to-Many)
+    # Relationships
+    # One-to-many relationship with completions
+    # back_populates ensures bidirectional access
+    # cascade deletes completions if habit is deleted
+    # lazy="joined" performs eager loading for performance
     completions = relationship(
         "Completion",
         back_populates="habit",
@@ -75,15 +99,16 @@ class Habit(Base):
         if not self.completions:
             return 0
         
-        # Sort completions by date
+        # Sort completions by date to evaluate streaks
         sorted_completions = sorted(self.completions, key=lambda c: c.completion_date)
         
         streak = 0
         
         if self.periodicity == "daily":
+            # Start checking from current date
             check_date = current_date.date()
             
-            # Check backwards from current date
+            # Iterate backwards checking for daily completions
             while True:
                 has_completion = any(
                     c.completion_date.date() == check_date
@@ -92,12 +117,12 @@ class Habit(Base):
                 
                 if has_completion:
                     streak += 1
-                    check_date -= timedelta(days=1)
+                    check_date -= timedelta(days=1)  # Move to previous day
                 else:
                     break
         
         elif self.periodicity == "weekly":
-            # Get ISO week number for current date
+            # Get current ISO week and year
             current_week = current_date.isocalendar()[1]
             current_year = current_date.isocalendar()[0]
             
@@ -115,6 +140,7 @@ class Habit(Base):
                 if has_completion:
                     streak += 1
                     check_week -= 1
+                    # Handle week number wrap-around
                     if check_week < 1:
                         check_week = 52
                         check_year -= 1
@@ -125,17 +151,17 @@ class Habit(Base):
     
     def calculate_longest_streak(self) -> int:
         """
-            Calculate the longest streak ever achieved for this habit.
+        Calculate the longest streak ever achieved for this habit.
+        
+        This method finds the maximum consecutive period where the
+        habit was completed, respecting the periodicity.
+        
+        Returns:
+            Longest streak count (days or weeks)
             
-            This method finds the maximum consecutive period where the
-            habit was completed, respecting the periodicity.
-            
-            Returns:
-                Longest streak count (days or weeks)
-                
-            Example:
-                >>> habit.calculate_longest_streak()
-                21  # Best streak was 21 days/weeks
+        Example:
+            >>> habit.calculate_longest_streak()
+            21  # Best streak was 21 days/weeks
         """
         if not self.completions:
             return 0
@@ -144,7 +170,7 @@ class Habit(Base):
         current_streak = 0
         
         if self.periodicity == "daily":
-            # Get unique dates from completions
+            # Get unique sorted dates of completions
             dates = sorted(set(c.completion_date.date() for c in self.completions))
             
             if not dates:
@@ -152,7 +178,8 @@ class Habit(Base):
             
             current_streak = 1
             max_streak = 1
-             # Check for consecutive days
+            
+            # Evaluate consecutive daily streaks
             for i in range(1, len(dates)):
                 if dates[i] - dates[i-1] == timedelta(days=1):
                     current_streak += 1
@@ -161,11 +188,11 @@ class Habit(Base):
                     current_streak = 1
         
         elif self.periodicity == "weekly":
-            # Group completions by week
+            # Collect unique week-year pairs
             weeks = set()
             for c in self.completions:
                 week_year = (c.completion_date.isocalendar()[0], 
-                           c.completion_date.isocalendar()[1])
+                             c.completion_date.isocalendar()[1])
                 weeks.add(week_year)
             
             weeks = sorted(weeks)
@@ -176,12 +203,12 @@ class Habit(Base):
             current_streak = 1
             max_streak = 1
             
-             # Check for consecutive weeks
+            # Evaluate consecutive weekly streaks
             for i in range(1, len(weeks)):
                 prev_year, prev_week = weeks[i-1]
                 curr_year, curr_week = weeks[i]
                 
-                # Check if consecutive week
+                # Check if current week follows previous week
                 is_consecutive = False
                 if curr_year == prev_year and curr_week == prev_week + 1:
                     is_consecutive = True
@@ -217,22 +244,22 @@ class Habit(Base):
             return True
         
         if self.periodicity == "daily":
-             # Check if completed yesterday
+            # Check if habit was completed yesterday
             yesterday = (current_date - timedelta(days=1)).date()
             return not any(c.completion_date.date() == yesterday for c in self.completions)
         
         elif self.periodicity == "weekly":
-            # Get current ISO year and week
+            # Current ISO year and week
             current_year, current_week, _ = current_date.isocalendar()
             
-            # Get last week's ISO year and week
+            # Last week's ISO year and week
             last_week_date = current_date - timedelta(weeks=1)
             last_year, last_week, _ = last_week_date.isocalendar()
             
-            # Collect all completion (year, week) pairs
+            # Collect all completion week-year pairs
             completion_weeks = {
                 (c.completion_date.isocalendar()[0],
-                c.completion_date.isocalendar()[1])
+                 c.completion_date.isocalendar()[1])
                 for c in self.completions
             }
             
@@ -262,14 +289,22 @@ class Completion(Base):
         habit (Habit): Related habit object
     """
     
+    # Table name for ORM
     __tablename__ = "completions"
-    
     # Columns
+    
+    # Primary key, auto-incrementing integer
     completion_id = Column(Integer, primary_key=True, autoincrement=True)
+    
+    # Foreign key to habits table, cascading deletes
     habit_id = Column(Integer, ForeignKey("habits.habit_id", ondelete="CASCADE"), nullable=False)
+    
+    # Timestamp of completion, defaults to UTC now
     completion_date = Column(DateTime, default=datetime.utcnow, nullable=False)
     
+    
     # Relationships
+    # Bidirectional relationship back to Habit
     habit = relationship("Habit", back_populates="completions")
     
     def __repr__(self):

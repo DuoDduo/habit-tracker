@@ -12,7 +12,10 @@ Functional Programming Principles Demonstrated:
 - No side effects
 """
 
+# Import List typing for type hints
 from typing import List
+
+# Import Habit model to work with habit instances
 from app.models.habit import Habit
 
 
@@ -37,6 +40,7 @@ class AnalyticsService:
         Returns:
             Filtered list of habits
         """
+        # Apply filter with lambda to select habits where h.periodicity equals given period
         return list(filter(lambda h: h.periodicity == period, habits))
     
     @staticmethod
@@ -52,11 +56,14 @@ class AnalyticsService:
         Returns:
             Longest streak (0 if no habits)
         """
+        # Return 0 immediately if no habits are provided
         if not habits:
             return 0
         
-        # Use map to apply function to all habits
+        # Map each habit to its longest streak (pure function call)
         streaks = map(lambda h: h.calculate_longest_streak(), habits)
+        
+        # Return the maximum streak, defaulting to 0 if streaks is empty
         return max(streaks, default=0)
     
     @staticmethod
@@ -70,6 +77,7 @@ class AnalyticsService:
         Returns:
             Longest streak for this habit
         """
+        # Simply call the habit's method to get its longest streak
         return habit.calculate_longest_streak()
     
     @staticmethod
@@ -85,6 +93,7 @@ class AnalyticsService:
         Returns:
             List of habit names
         """
+        # Extract habit.name for every habit using list comprehension
         return [h.name for h in habits]
     
     @staticmethod
@@ -101,7 +110,9 @@ class AnalyticsService:
         Returns:
             Habits with low streaks
         """
-        from datetime import datetime
+        from datetime import datetime  # Import datetime locally for pure function
+        
+        # Filter habits where current streak (as of now) is below threshold
         return list(filter(
             lambda h: h.calculate_current_streak(datetime.now()) < threshold,
             habits
@@ -119,7 +130,11 @@ class AnalyticsService:
         Returns:
             Dict with counts {"daily": x, "weekly": y}
         """
+        # Count number of daily habits
         daily = len(list(filter(lambda h: h.periodicity == "daily", habits)))
+        
+        # Count number of weekly habits
         weekly = len(list(filter(lambda h: h.periodicity == "weekly", habits)))
         
+        # Return as dictionary
         return {"daily": daily, "weekly": weekly}

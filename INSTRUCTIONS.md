@@ -232,6 +232,7 @@ habit-tracker/
 │   ├── .env                       # Environment variables
 │   ├── .gitignore                 # Git ignore rules
 │   ├── requirements.txt           # Python dependencies
+│   ├── asgi.py                    # ASGI wrapper for Uvicorn
 │   ├── run.py                     # Application entry point
 │   └── generate_test_data.py      # Generate 5 habits + 4 weeks data
 │
@@ -381,24 +382,20 @@ source venv/bin/activate  # Mac/Linux
 venv\Scripts\activate     # Windows
 
 # Start server
-python run.py
+uvicorn asgi:asgi_app --reload --port 5000
 ```
 
 **Expected Output:**
 ```
-============================================================
-🚀 Starting Habit Tracker API Server
-============================================================
-📍 Server running at: http://0.0.0.0:5000
-🗄️  Database: sqlite:///../data/habits.db
-🔧 Environment: development
-============================================================
- * Running on all addresses (0.0.0.0)
- * Running on http://127.0.0.1:5000
- * Running on http://192.168.1.x:5000
+INFO:     Will watch for changes in these directories: [...]
+INFO:     Uvicorn running on http://127.0.0.1:5000 (Press CTRL+C to quit)
+INFO:     Started reloader process [...] using StatReload
+INFO:     Started server process [...]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
 ```
 
-**✅ Backend is ready when you see "Running on..."**
+**✅ Backend is ready when you see "Application startup complete."**
 
 ### Start Frontend (New Terminal)
 

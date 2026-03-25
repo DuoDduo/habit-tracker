@@ -1,5 +1,6 @@
 # Core Framework
 Flask
+flasgger
 flask-cors
 python-dotenv
 
@@ -21,3 +22,7 @@ black
 flake8
 
 python-dateutil
+
+# Server
+uvicorn
+a2wsgi
