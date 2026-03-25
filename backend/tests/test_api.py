@@ -4,7 +4,7 @@ Author: Blessing Oluwapelumi James
 Matric No: 92134091
 
 Integration tests for REST API.
-Total: 15 tests
+Total: 18 tests
 """
 
 import pytest

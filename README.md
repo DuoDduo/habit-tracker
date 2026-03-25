@@ -1,4 +1,4 @@
-#  Habit Tracker - Complete Full-Stack Application
+# HabitOS: Achievement Engine
 
 **Author:** Blessing Oluwapelumi James  
 **Matriculation Number:** 92134091  
@@ -12,7 +12,7 @@
 
 ---
 
-##  Table of Contents
+## Table of Contents
 
 1. [ Project Overview](#project-overview)
 2. [ Features & Screenshots](#features--screenshots)
@@ -44,48 +44,52 @@
 
 ---
 
-##  Project Overview
+## Project Overview
 
-A **full-stack habit tracking application** built for my Phase 3 project, demonstrating:
+A **premium, full-stack habit tracking engine** designed for high-achievers, demonstrating:
 
 ### **Backend (Python + Flask + SQLAlchemy)**
--  Object-Oriented Programming (Habit model with methods)
--  Functional Programming (Pure analytics functions)
--  RESTful API with Flask
--  SQLAlchemy ORM for database operations
--  Pydantic validation schemas
--  Three-layer architecture (API → Services → Models)
--  Comprehensive testing with pytest
+
+- **Object-Oriented Architecture**: Modular Habit & Completion models.
+- **Functional Analytics**: Pure functions for data processing (map, filter, reduce).
+- **ASGI Ready**: Integrated with Uvicorn for modern, asynchronous performance.
+- **Swagger Documentation**: Automated API documentation for easy integration.
 
 ### **Frontend (React + Vite + Tailwind CSS)**
--  Component-based architecture
--  23 reusable components
--  Custom React hooks
--  Responsive design
--  Professional UI/UX
--  Real-time updates
--  Error handling and loading states
 
+- **Premium View Systems**: Managed SPA architecture (Dashboard vs Analytics).
+- **Dynamic Personalization**: User-centric onboarding and identity management.
+- **Glassmorphism & Animations**: Modern CSS4 visual identity with micro-animations.
+- **Custom Illustrations**: Handcrafted SVG visuals for a superior first impression.
 
----
-
-##  Features & Screenshots
-
-### 1. Dashboard & Default Habits
-I have pre-loaded the application with **5 predefined habits** and **4 weeks (28 days) of time-series completion data**. The dashboard displays real-time streaks that accurately respect both `daily` and `weekly` periodicity.
-
-*(Screenshot: Dashboard showing the 5 predefined habits and their calculated streaks)*
-![Dashboard showing 5 Habits and Streaks](assets/dashboard_screenshot.png)
-
-### 2. Functional Analytics Module
-The analytics view uses functional programming principles, displaying longest streaks, completion rates, and struggling habits.
-
-*(Screenshot: Analytics Module functioning correctly)*
-![Analytics Dashboard](assets/analytics_screenshot.png)
+### **Integrated Experience**
+HabitOS features a seamless **Integrated Landing Page** that welcomes new visitors before they transition to their personalized workspace. The entire system is built on a "Blue & White" professional palette, ensuring focus and clarity.
 
 ---
 
-##  Complete File Structure
+## Features & Highlights
+
+### 1. Integrated Landing Page
+The entry point for all new visitors. Featuring a high-impact Hero section, dynamic social proof, and a 3D-styled dashboard preview.
+
+_(Screenshot: HabitOS Landing Page in Blue & White)_
+![Landing Page](assets/landing_screenshot.png)
+
+### 2. Dashboard & Growth Journey
+A person-centric workspace featuring your habits, streaks, and a custom "Growth Journey" SVG illustration.
+
+_(Screenshot: Dashboard with 5 predefined habits and Blue/White aesthetics)_
+![Dashboard](assets/dashboard_screenshot.png)
+
+### 3. Premium Data Analytics
+A dedicated full-page view leveraging functional programming to visualize your behavior patterns.
+
+_(Screenshot: Analytics Dashboard showing progress rates)_
+![Analytics](assets/analytics_screenshot.png)
+
+---
+
+## Complete File Structure
 
 ```
 habit-tracker/
@@ -144,18 +148,22 @@ habit-tracker/
 │   │   │   └── habitApi.js            # Axios API client
 │   │   │
 │   │   ├── components/
+│   │   │   │   ├── Header.jsx
+│   │   │   │   ├── Footer.jsx
+│   │   │   │   ├── Container.jsx
+│   │   │   │   └── Sidebar.jsx
+│   │   │   │
+│   │   │   ├── marketing/             # Landing & Marketing
+│   │   │   │   └── Landing.jsx
+│   │   │   │
 │   │   │   ├── common/                # Reusable components
 │   │   │   │   ├── Button.jsx
 │   │   │   │   ├── Card.jsx
 │   │   │   │   ├── Modal.jsx
 │   │   │   │   ├── Badge.jsx
 │   │   │   │   ├── Loading.jsx
+│   │   │   │   ├── Illustrations.jsx
 │   │   │   │   └── ErrorMessage.jsx
-│   │   │   │
-│   │   │   ├── layout/                # Layout components
-│   │   │   │   ├── Header.jsx
-│   │   │   │   ├── Footer.jsx
-│   │   │   │   └── Container.jsx
 │   │   │   │
 │   │   │   ├── habits/                # Habit-specific components
 │   │   │   │   ├── HabitCard.jsx
@@ -204,7 +212,7 @@ habit-tracker/
 
 ---
 
-##  Quick Start Guide
+## Quick Start Guide
 
 ### Prerequisites
 
@@ -248,6 +256,7 @@ uvicorn asgi:asgi_app --reload --port 5000
 ```
 
 **Expected Output:**
+
 ```
 ============================================================
  Starting Habit Tracker API Server
@@ -274,6 +283,7 @@ npm run dev
 ```
 
 **Expected Output:**
+
 ```
 VITE v5.0.8  ready in 523 ms
 
@@ -286,14 +296,15 @@ VITE v5.0.8  ready in 523 ms
 Open browser to: **http://localhost:3000**
 
 You should see:
--  Header with "Habit Tracker" title
--  Analytics dashboard (4 stat cards)
--  5 predefined habits with streaks
--  Ability to create, check-off, and delete habits
+
+- Header with "Habit Tracker" title
+- Analytics dashboard (4 stat cards)
+- 5 predefined habits with streaks
+- Ability to create, check-off, and delete habits
 
 ---
 
-##  Backend Setup (Detailed)
+## Backend Setup (Detailed)
 
 ### Dependencies (`requirements.txt`)
 
@@ -320,6 +331,7 @@ PORT=5000
 ### Database Schema
 
 **habits table:**
+
 - `habit_id` (PK, AUTOINCREMENT)
 - `name` (TEXT, NOT NULL)
 - `specification` (TEXT)
@@ -327,6 +339,7 @@ PORT=5000
 - `created_at` (TIMESTAMP)
 
 **completions table:**
+
 - `completion_id` (PK, AUTOINCREMENT)
 - `habit_id` (FK → habits.habit_id, CASCADE DELETE)
 - `completion_date` (TIMESTAMP)
@@ -338,6 +351,7 @@ python generate_test_data.py
 ```
 
 Creates:
+
 1. **Drink Water** (Daily, 90% completion) - 25 completions
 2. **Exercise** (Daily, 70% completion) - 20 completions
 3. **Read Book** (Daily, 60% completion) - 17 completions
@@ -346,7 +360,7 @@ Creates:
 
 ---
 
-##  Frontend Setup (Detailed)
+## Frontend Setup (Detailed)
 
 ### Dependencies (`package.json`)
 
@@ -377,14 +391,15 @@ VITE_API_BASE_URL=http://localhost:5000/api
 
 ### Component Count
 
-| Category | Components | Purpose |
-|----------|-----------|---------|
-| Common | 6 | Reusable UI elements |
-| Layout | 3 | Page structure |
-| Habits | 6 | Habit management |
-| Analytics | 3 | Data visualization |
-| UI | 2 | Specialized elements |
-| **Total** | **20** | |
+| Category  | Components | Purpose              |
+| --------- | ---------- | -------------------- |
+| Core      | 7          | Reusable UI & Icons  |
+| Layout    | 4          | Site structure       |
+| Marketing | 1          | Landing Page         |
+| Habits    | 6          | Habit management     |
+| Analytics | 3          | Data visualization   |
+| UI        | 2          | Specialized elements |
+| **Total** | **23**     |                      |
 
 ### Custom Hooks
 
@@ -394,7 +409,7 @@ VITE_API_BASE_URL=http://localhost:5000/api
 
 ---
 
-##  Testing
+## Testing
 
 ### Backend Tests
 
@@ -404,11 +419,13 @@ pytest tests/ -v
 ```
 
 **Test Suite:**
--  `test_models.py` - 15 tests (OOP behavior)
--  `test_services.py` - 12 tests (Business logic)
--  `test_api.py` - 18 tests (API endpoints)
+
+- `test_models.py` - 15 tests (OOP behavior)
+- `test_services.py` - 12 tests (Business logic)
+- `test_api.py` - 18 tests (API integration tests)
 
 **Expected Result:**
+
 ```
 ====================== test session starts ======================
 tests/test_api.py ....................          [ 40%]
@@ -418,9 +435,8 @@ tests/test_services.py ............             [100%]
 ==================== 45 passed in 2.45s =====================
 ```
 
-*(Screenshot: Complete suite of 45 passing unit tests covering all functions and CRUD)*
+_(Screenshot: Complete suite of 45 passing unit tests covering all functions and CRUD)_
 ![Unit Tests Passing](assets/unit_tests_screenshot.png)
-
 
 ### Test Coverage
 
@@ -443,34 +459,35 @@ Opens `htmlcov/index.html` with coverage report (Target: >80%)
 
 ---
 
+## Database Architecture & Schema
 
-##  Database Architecture & Schema
 The application uses a relational SQLite database (`data/habits.db`) managed via SQLAlchemy ORM.
 
 ### Models & Schema
+
 1. **Habit Table**: Represents the core tracking entity (OOP based).
    - `habit_id` (Primary Key, Integer)
    - `name` (String, Not Null)
    - `specification` (String)
    - `periodicity` (String, Enum: "daily", "weekly")
    - `created_at` (DateTime)
-   
 2. **Completion Table**: Represents the timestamped check-offs.
    - `completion_id` (Primary Key, Integer)
    - `habit_id` (Foreign Key -> habits.habit_id, Cascade Delete)
    - `completion_date` (DateTime)
 
 ### Database Viewer & UML Class Diagram
-*(Screenshot: DB Viewer showing table populated, and UML diagram of the architecture)*
+
+_(Screenshot: DB Viewer showing table populated, and UML diagram of the architecture)_
 
 ![Database Schema or Data](assets/database_screenshot.png)
 
 ![UML Class Diagram](assets/uml_diagram.png)
 
-
 ---
 
-##  API Documentation
+## API Documentation
+
 The backend includes API documentation using Swagger (Flasgger). This allows you to test all endpoints (CRUD & Analytics) directly from your browser, making it easier to test endpoints.
 
 Interactive UI: http://localhost:5000/apidocs
@@ -487,27 +504,28 @@ http://localhost:5000/api
 
 #### **Habits**
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/habits` | Get all habits |
-| POST | `/habits` | Create new habit |
-| GET | `/habits/:id` | Get specific habit |
-| DELETE | `/habits/:id` | Delete habit |
-| POST | `/habits/:id/check-off` | Mark as completed |
+| Method | Endpoint                | Description        |
+| ------ | ----------------------- | ------------------ |
+| GET    | `/habits`               | Get all habits     |
+| POST   | `/habits`               | Create new habit   |
+| GET    | `/habits/:id`           | Get specific habit |
+| DELETE | `/habits/:id`           | Delete habit       |
+| POST   | `/habits/:id/check-off` | Mark as completed  |
 
 #### **Analytics**
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/analytics/longest-streak` | Overall longest streak |
-| GET | `/analytics/by-periodicity?period=daily` | Filter habits |
-| GET | `/analytics/tracked-habits` | List habit names |
-| GET | `/analytics/struggling?threshold=3` | Low-streak habits |
-| GET | `/analytics/summary` | Complete analytics |
+| Method | Endpoint                                 | Description            |
+| ------ | ---------------------------------------- | ---------------------- |
+| GET    | `/analytics/longest-streak`              | Overall longest streak |
+| GET    | `/analytics/by-periodicity?period=daily` | Filter habits          |
+| GET    | `/analytics/tracked-habits`              | List habit names       |
+| GET    | `/analytics/struggling?threshold=3`      | Low-streak habits      |
+| GET    | `/analytics/summary`                     | Complete analytics     |
 
 ### Example Requests
 
 **Create Habit:**
+
 ```bash
 curl -X POST http://localhost:5000/api/habits \
   -H "Content-Type: application/json" \
@@ -519,18 +537,20 @@ curl -X POST http://localhost:5000/api/habits \
 ```
 
 **Check Off Habit:**
+
 ```bash
 curl -X POST http://localhost:5000/api/habits/1/check-off
 ```
 
 **Get Analytics:**
+
 ```bash
 curl http://localhost:5000/api/analytics/summary
 ```
 
 ---
 
-##  Component Documentation
+## Component Documentation
 
 ### Component Hierarchy
 
@@ -570,6 +590,7 @@ App
 ### Key Components
 
 **Button** - Variants: primary, secondary, danger, success, outline
+
 ```jsx
 <Button variant="primary" icon={Plus} onClick={handleClick}>
   Create Habit
@@ -577,6 +598,7 @@ App
 ```
 
 **Card** - Content wrapper with hover effect
+
 ```jsx
 <Card hover padding="p-6">
   Content here
@@ -584,6 +606,7 @@ App
 ```
 
 **Modal** - Overlay dialog with ESC support
+
 ```jsx
 <Modal isOpen={isOpen} onClose={onClose} title="Create Habit">
   Form content
@@ -592,39 +615,40 @@ App
 
 ---
 
-##  Acceptance Criteria
+## Acceptance Criteria
 
-| Requirement | Status | Implementation |
-|------------|--------|----------------|
-| Python 3.7+ |  | Python 3.9+ |
-| Detailed installation instructions |  | This README |
-| Habit as class (OOP) |  | `models/habit.py` - Habit class with methods |
-| Daily & weekly habits |  | Both supported, validated |
-| 5 predefined habits |  | `generate_test_data.py` |
-| 4 weeks test data |  | 88 completions generated |
-| Track creation & completion timestamps |  | `created_at`, `completion_date` |
-| Data persistence |  | SQLite + SQLAlchemy ORM |
-| Analytics module (FP) |  | `services/analytics_service.py` |
-| - List all habits |  | `get_all_tracked_habits()` (list comprehension) |
-| - Filter by periodicity |  | `get_habits_by_periodicity()` (filter + lambda) |
-| - Longest streak all |  | `find_longest_streak_all()` (map + max) |
-| - Longest streak one |  | `find_longest_streak_for_habit()` |
-| Clean API |  | Flask REST API + React frontend |
-| Unit tests |  | 45 tests with pytest |
-| Code documentation |  | Docstrings on all functions/classes |
+| Requirement                            | Status | Implementation                                  |
+| -------------------------------------- | ------ | ----------------------------------------------- |
+| Python 3.9+                            | [x]    | Verified modern runtime                         |
+| Detailed installation instructions     | [x]    | Comprehensive README                            |
+| Habit as class (OOP)                   | [x]    | `models/habit.py` logic                         |
+| Integrated Landing Page                | [x]    | `Landing.jsx` with marketing flow               |
+| Premium SVG Illustrations              | [x]    | `Illustrations.jsx` (Hand-drawn)                |
+| Daily & weekly habits                  | [x]    | Both supported and validated                    |
+| 5 predefined habits                    | [x]    | Static assets pre-loaded                        |
+| 4 weeks test data                      | [x]    | 88 completions generated                        |
+| Data persistence                       | [x]    | SQLite + SQLAlchemy ORM                         |
+| Analytics module (FP)                  | [x]    | `services/analytics_service.py`                 |
+| - List all habits                      | [x]    | List comprehension implementation               |
+| - Filter by periodicity                | [x]    | Lambda + Filter implementation                  |
+| - Longest streak all                   | [x]    | Functional Max/Map approach                     |
+| Unit tests                             | [x]    | 45 tests passing (>80% coverage)                |
+| Professional UI/UX                     | [x]    | Blue/White theme + animations                   |
 
 ---
 
-##  Troubleshooting
+## Troubleshooting
 
 ### Backend Issues
 
 **"ModuleNotFoundError"**
+
 ```bash
 pip install -r requirements.txt
 ```
 
 **"Address already in use (port 5000)"**
+
 ```bash
 # Mac/Linux
 lsof -ti:5000 | xargs kill -9
@@ -635,6 +659,7 @@ taskkill /PID <PID> /F
 ```
 
 **"Database locked"**
+
 ```bash
 rm data/habits.db
 python generate_test_data.py
@@ -643,16 +668,19 @@ python generate_test_data.py
 ### Frontend Issues
 
 **"CORS Error"**
+
 - Ensure backend is running
 - Check `flask-cors` is installed
 - Verify `.env` has correct API URL
 
 **"Network Error / Cannot connect"**
+
 - Backend must be running on port 5000
 - Check backend terminal for errors
 - Try: `curl http://localhost:5000`
 
 **"Blank page / Not loading"**
+
 - Check browser console (F12) for errors
 - Verify all npm dependencies installed
 - Try: `rm -rf node_modules && npm install`
@@ -660,12 +688,14 @@ python generate_test_data.py
 ### Common Issues
 
 **Habits not displaying**
+
 1. Check browser console for API errors
 2. Verify backend is running
 3. Check `data/habits.db` exists
 4. Run `python generate_test_data.py`
 
 **Tests failing**
+
 ```bash
 # Backend
 cd backend
@@ -676,25 +706,27 @@ pytest tests/ -v --tb=short
 
 ---
 
-##  Key Concepts Explained
+## Key Concepts Explained
 
 ### 1. **Object-Oriented Programming (OOP)**
 
 **Habit Class** (`models/habit.py`)
+
 ```python
 class Habit(Base):
     """Encapsulates data AND behavior"""
-    
+
     def calculate_current_streak(self):
         # Instance method operating on self.completions
         pass
-    
+
     def is_broken(self):
         # Business logic inside the class
         pass
 ```
 
 **Benefits:**
+
 - Data + behavior together
 - Encapsulation
 - Easy to test
@@ -703,6 +735,7 @@ class Habit(Base):
 ### 2. **Functional Programming (FP)**
 
 **Analytics Service** (`services/analytics_service.py`)
+
 ```python
 @staticmethod
 def get_habits_by_periodicity(habits, period):
@@ -717,6 +750,7 @@ def find_longest_streak_all(habits):
 ```
 
 **Principles:**
+
 - Pure functions
 - No side effects
 - Same input → same output
@@ -735,6 +769,7 @@ Database (SQLite)
 ```
 
 **Benefits:**
+
 - Separation of concerns
 - Easy to test each layer
 - Can swap implementations
@@ -768,27 +803,27 @@ const { habits, loading, createHabit } = useHabits();
 
 ---
 
-##  Project Statistics
+## Project Statistics
 
 ### Backend
 
-| Metric | Count |
-|--------|-------|
-| Python Files | 17 |
-| Classes | 6 |
-| Functions | 50+ |
+| Metric        | Count  |
+| ------------- | ------ |
+| Python Files  | 17     |
+| Classes       | 6      |
+| Functions     | 50+    |
 | Lines of Code | ~2,000 |
-| Tests | 45 |
-| Test Coverage | 80% |
+| Tests         | 45     |
+| Test Coverage | 80%    |
 
 ### Frontend
 
-| Metric | Count |
-|--------|-------|
-| Components | 23 |
-| Custom Hooks | 3 |
-| Utility Functions | 8 |
-| Lines of Code | ~2,500 |
+| Metric            | Count  |
+| ----------------- | ------ |
+| Components        | 23     |
+| Custom Hooks      | 3      |
+| Utility Functions | 8      |
+| Lines of Code     | ~2,500 |
 
 ### Total
 
@@ -799,7 +834,7 @@ const { habits, loading, createHabit } = useHabits();
 
 ---
 
-##  What Makes This Project Professional
+## What Makes This Project Professional
 
 1. **Industry-Standard Architecture**
    - Backend: Three-layer + service pattern
@@ -831,7 +866,7 @@ const { habits, loading, createHabit } = useHabits();
 
 ---
 
-##  Contact
+## Contact
 
 **Student:** Blessing Oluwapelumi James  
 **Matriculation Number:** 92134091  
@@ -839,13 +874,13 @@ const { habits, loading, createHabit } = useHabits();
 
 ---
 
-##  License
+## License
 
 This project is submitted as academic coursework and is not licensed for redistribution.
 
 ---
 
-##  Acknowledgments
+## Acknowledgments
 
 - **Flask** - Web framework
 - **React** - UI library
@@ -856,10 +891,11 @@ This project is submitted as academic coursework and is not licensed for redistr
 
 ---
 
-**Last Updated:** January 17, 2026  
+**Last Updated:** March 25, 2026  
 **Version:** 1.0.0
 
- **Project Complete & Ready for Submission!** Each with realistic completion patterns
+**Project Complete & Ready for Submission!** Each with realistic completion patterns
+
 ```
 
 ---
@@ -870,16 +906,18 @@ This project is submitted as academic coursework and is not licensed for redistr
 
 The analytics module is implemented using **pure functional programming** principles:
 
- **Pure Functions** - No side effects  
- **Immutable Operations** - Doesn't modify input  
- **Built-in Functions** - Uses `filter()`, `map()`, `max()`  
+ **Pure Functions** - No side effects
+ **Immutable Operations** - Doesn't modify input
+ **Built-in Functions** - Uses `filter()`, `map()`, `max()`
  **List Comprehensions** - Pythonic functional style
 
 ### File Location
 
 ```
+
 backend/app/services/analytics_service.py
-```
+
+````
 
 ### All Analytics Functions
 
@@ -890,23 +928,24 @@ backend/app/services/analytics_service.py
 def get_habits_by_periodicity(habits: List[Habit], period: str) -> List[Habit]:
     """
     Filter habits by periodicity using filter() and lambda.
-    
+
     Args:
         habits: List of Habit objects
         period: "daily" or "weekly"
-    
+
     Returns:
         Filtered list of habits
-        
+
     Example:
         >>> daily_habits = get_habits_by_periodicity(all_habits, "daily")
         >>> len(daily_habits)  # 4 (from 5 total)
         4
     """
     return list(filter(lambda h: h.periodicity == period, habits))
-```
+````
 
 **Test:**
+
 ```python
 def test_filter_by_periodicity():
     # Input: 5 habits (4 daily, 1 weekly)
@@ -921,13 +960,13 @@ def test_filter_by_periodicity():
 def find_longest_streak_all(habits: List[Habit]) -> int:
     """
     Find longest streak across all habits using map() and max().
-    
+
     Args:
         habits: List of Habit objects
-    
+
     Returns:
         Longest streak count (0 if no habits)
-        
+
     Example:
         >>> longest = find_longest_streak_all(all_habits)
         >>> longest
@@ -935,12 +974,13 @@ def find_longest_streak_all(habits: List[Habit]) -> int:
     """
     if not habits:
         return 0
-    
+
     streaks = map(lambda h: h.calculate_longest_streak(), habits)
     return max(streaks, default=0)
 ```
 
 **Test:**
+
 ```python
 def test_longest_streak_all():
     # Input: Habits with streaks [12, 8, 5, 4, 9]
@@ -955,13 +995,13 @@ def test_longest_streak_all():
 def find_longest_streak_for_habit(habit: Habit) -> int:
     """
     Get longest streak for specific habit.
-    
+
     Args:
         habit: Habit object
-    
+
     Returns:
         Longest streak for this habit
-        
+
     Example:
         >>> habit = get_habit_by_id(1)  # "Drink Water"
         >>> streak = find_longest_streak_for_habit(habit)
@@ -972,6 +1012,7 @@ def find_longest_streak_for_habit(habit: Habit) -> int:
 ```
 
 **Test:**
+
 ```python
 def test_longest_streak_single():
     result = find_longest_streak_for_habit(drink_water_habit)
@@ -985,13 +1026,13 @@ def test_longest_streak_single():
 def get_all_tracked_habits(habits: List[Habit]) -> List[str]:
     """
     Get list of all habit names using list comprehension.
-    
+
     Args:
         habits: List of Habit objects
-    
+
     Returns:
         List of habit names
-        
+
     Example:
         >>> names = get_all_tracked_habits(all_habits)
         >>> names
@@ -1001,6 +1042,7 @@ def get_all_tracked_habits(habits: List[Habit]) -> List[str]:
 ```
 
 **Test:**
+
 ```python
 def test_get_tracked_habits():
     result = get_all_tracked_habits(habits)
@@ -1015,14 +1057,14 @@ def test_get_tracked_habits():
 def get_struggling_habits(habits: List[Habit], threshold: int = 3) -> List[Habit]:
     """
     Find habits with current streak below threshold using filter().
-    
+
     Args:
         habits: List of Habit objects
         threshold: Minimum acceptable streak (default: 3)
-    
+
     Returns:
         Habits with low streaks
-        
+
     Example:
         >>> struggling = get_struggling_habits(all_habits, threshold=3)
         >>> [h.name for h in struggling]
@@ -1036,6 +1078,7 @@ def get_struggling_habits(habits: List[Habit], threshold: int = 3) -> List[Habit
 ```
 
 **Test:**
+
 ```python
 def test_struggling_habits():
     result = get_struggling_habits(habits, threshold=3)
@@ -1051,13 +1094,13 @@ def test_struggling_habits():
 def count_by_periodicity(habits: List[Habit]) -> dict:
     """
     Count habits by periodicity using filter().
-    
+
     Args:
         habits: List of Habit objects
-    
+
     Returns:
         Dict with counts {"daily": x, "weekly": y}
-        
+
     Example:
         >>> counts = count_by_periodicity(all_habits)
         >>> counts
@@ -1065,11 +1108,12 @@ def count_by_periodicity(habits: List[Habit]) -> dict:
     """
     daily = len(list(filter(lambda h: h.periodicity == "daily", habits)))
     weekly = len(list(filter(lambda h: h.periodicity == "weekly", habits)))
-    
+
     return {"daily": daily, "weekly": weekly}
 ```
 
 **Test:**
+
 ```python
 def test_count_by_periodicity():
     result = count_by_periodicity(habits)
@@ -1081,17 +1125,17 @@ def test_count_by_periodicity():
 
 All analytics functions are exposed via REST API:
 
-| Endpoint | Function | FP Technique |
-|----------|----------|--------------|
-| `GET /analytics/longest-streak` | `find_longest_streak_all()` | `map()` + `max()` |
+| Endpoint                                     | Function                      | FP Technique          |
+| -------------------------------------------- | ----------------------------- | --------------------- |
+| `GET /analytics/longest-streak`              | `find_longest_streak_all()`   | `map()` + `max()`     |
 | `GET /analytics/by-periodicity?period=daily` | `get_habits_by_periodicity()` | `filter()` + `lambda` |
-| `GET /analytics/tracked-habits` | `get_all_tracked_habits()` | List comprehension |
-| `GET /analytics/struggling?threshold=3` | `get_struggling_habits()` | `filter()` + `lambda` |
-| `GET /analytics/summary` | `count_by_periodicity()` | Multiple `filter()` |
+| `GET /analytics/tracked-habits`              | `get_all_tracked_habits()`    | List comprehension    |
+| `GET /analytics/struggling?threshold=3`      | `get_struggling_habits()`     | `filter()` + `lambda` |
+| `GET /analytics/summary`                     | `count_by_periodicity()`      | Multiple `filter()`   |
 
 ---
 
-##  Predefined Test Data
+## Predefined Test Data
 
 ### Overview
 
@@ -1108,6 +1152,7 @@ python generate_test_data.py
 ### Predefined Habits Details
 
 #### Habit 1: Drink Water (Daily)
+
 ```python
 {
     "name": "Drink Water",
@@ -1121,6 +1166,7 @@ python generate_test_data.py
 ```
 
 #### Habit 2: Exercise (Daily)
+
 ```python
 {
     "name": "Exercise",
@@ -1134,6 +1180,7 @@ python generate_test_data.py
 ```
 
 #### Habit 3: Read Book (Daily)
+
 ```python
 {
     "name": "Read Book",
@@ -1147,6 +1194,7 @@ python generate_test_data.py
 ```
 
 #### Habit 4: Weekly Review (Weekly)
+
 ```python
 {
     "name": "Weekly Review",
@@ -1160,6 +1208,7 @@ python generate_test_data.py
 ```
 
 #### Habit 5: Meditation (Daily)
+
 ```python
 {
     "name": "Meditation",
@@ -1174,18 +1223,21 @@ python generate_test_data.py
 
 ### Data Characteristics
 
- **Realistic Patterns:**
+**Realistic Patterns:**
+
 - High compliance habit (90%)
 - Moderate compliance habits (70-80%)
 - Struggling habit (60%)
 - Perfect weekly habit (100%)
 
- **Time Series Data:**
+  **Time Series Data:**
+
 - Spans exactly 4 weeks (28 days)
 - Random times throughout each day
 - Realistic gaps and streaks
 
- **Used in Unit Tests:**
+  **Used in Unit Tests:**
+
 ```python
 @pytest.fixture
 def predefined_habits(test_db):
@@ -1213,7 +1265,7 @@ curl http://localhost:5000/api/habits | python -m json.tool
 
 ---
 
-##  API Documentation
+## API Documentation
 
 ### Base URL
 
@@ -1223,56 +1275,60 @@ http://localhost:5000/api
 
 ### Endpoints Summary
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| **Habits** |
-| GET | `/habits` | List all habits |
-| POST | `/habits` | Create new habit |
-| GET | `/habits/:id` | Get specific habit |
-| DELETE | `/habits/:id` | Delete habit |
-| POST | `/habits/:id/check-off` | Mark as completed |
+| Method        | Endpoint                    | Description            |
+| ------------- | --------------------------- | ---------------------- |
+| **Habits**    |
+| GET           | `/habits`                   | List all habits        |
+| POST          | `/habits`                   | Create new habit       |
+| GET           | `/habits/:id`               | Get specific habit     |
+| DELETE        | `/habits/:id`               | Delete habit           |
+| POST          | `/habits/:id/check-off`     | Mark as completed      |
 | **Analytics** |
-| GET | `/analytics/longest-streak` | Overall longest streak |
-| GET | `/analytics/by-periodicity` | Filter by period |
-| GET | `/analytics/tracked-habits` | List habit names |
-| GET | `/analytics/struggling` | Low-streak habits |
-| GET | `/analytics/summary` | Complete statistics |
+| GET           | `/analytics/longest-streak` | Overall longest streak |
+| GET           | `/analytics/by-periodicity` | Filter by period       |
+| GET           | `/analytics/tracked-habits` | List habit names       |
+| GET           | `/analytics/struggling`     | Low-streak habits      |
+| GET           | `/analytics/summary`        | Complete statistics    |
 
 ### Detailed Endpoint Documentation
 
-[See full API documentation in API_REFERENCE.md]
+The API is documented via Flasgger and can be accessed at `/apidocs` when the server is running.
 
 ---
 
-##  Code Quality
+## Code Quality
 
 ### Python Naming Conventions
 
- **snake_case** for functions and variables:
+**snake_case** for functions and variables:
+
 ```python
 def calculate_current_streak(self):
 def get_habits_by_periodicity(habits, period):
 habit_service = HabitService()
 ```
 
- **PascalCase** for classes:
+**PascalCase** for classes:
+
 ```python
 class Habit(Base):
 class HabitManager:
 class AnalyticsService:
 ```
 
- **UPPER_CASE** for constants:
+**UPPER_CASE** for constants:
+
 ```python
 API_BASE_URL = "http://localhost:5000/api"
 PERIODICITY_DAILY = "daily"
 ```
 
- **Descriptive names:**
+**Descriptive names:**
+
 ```python
 # Good
 def calculate_longest_streak(self):
-    
+
 # Bad
 def calc_ls(self):
 ```
@@ -1281,28 +1337,30 @@ def calc_ls(self):
 
 Every file, class, and complex function has:
 
- **Docstrings:**
+**Docstrings:**
+
 ```python
 def calculate_current_streak(self, current_date: datetime = None) -> int:
     """
     Calculate the current unbroken streak up to current_date.
-    
+
     For daily habits: checks for consecutive days
     For weekly habits: checks for consecutive weeks
-    
+
     Args:
         current_date: Reference date (defaults to now)
-        
+
     Returns:
         The current streak count (days or weeks)
-        
+
     Example:
         >>> habit.calculate_current_streak()
         7
     """
 ```
 
- **Inline comments for complex logic:**
+**Inline comments for complex logic:**
+
 ```python
 # Check backwards from current date
 check_date = current_date.date()
@@ -1313,7 +1371,7 @@ while True:
         c.completion_date.date() == check_date
         for c in self.completions
     )
-    
+
     if has_completion:
         streak += 1
         check_date -= timedelta(days=1)  # Move to previous day
@@ -1363,31 +1421,32 @@ dist/
 
 ---
 
-##  Final Checklist
+## Final Checklist
 
-- [x]  **Project uploaded to GitHub** (not zipped)
-- [x]  **Comprehensive README** with installation guide
-- [x]  **Unit test suite** (45 tests, 80% coverage)
-- [x]  **Screenshots** of 5 default habits and streaks
-- [x]  **Python naming conventions** followed
-- [x]  **.gitignore** configured (no __pycache__, *.db)
-- [x]  **Modular structure** (40+ files, logically split)
-- [x]  **Code comments** on all functions/classes
-- [x]  **Analytics module complete** (all 6 functions)
-- [x]  **Streak calculation respects periodicity**
-- [x]  **4 weeks of predefined data**
-- [x]  **Database schema documented**
-- [x]  **Test coverage report** included
+- [x] **Project uploaded to GitHub** (not zipped)
+- [x] **Comprehensive README** with installation guide
+- [x] **Unit test suite** (45 tests, 80% coverage)
+- [x] **Screenshots** of 5 default habits and streaks
+- [x] **Python naming conventions** followed
+- [x] **.gitignore** configured (no **pycache**, \*.db)
+- [x] **Modular structure** (40+ files, logically split)
+- [x] **Code comments** on all functions/classes
+- [x] **Analytics module complete** (all 6 functions)
+- [x] **Streak calculation respects periodicity**
+- [x] **4 weeks of predefined data**
+- [x] **Database schema documented**
+- [x] **Test coverage report** included
 
 ---
 
-
-##  Deployment
+## Deployment
 
 Instructions for deploying the application:
 
 ### **Backend (Render)**
+
 The Flask API uses `uvicorn` and `a2wsgi` to serve the application globally via [Render](https://render.com/).
+
 1. Provide the environment variables (e.g., `DATABASE_URL` if using Postgres instead of SQLite).
 2. Set the start command:
    ```bash
@@ -1396,41 +1455,43 @@ The Flask API uses `uvicorn` and `a2wsgi` to serve the application globally via 
 3. The server runs as an ASGI application using uvicorn.
 
 ### **Frontend (Vercel)**
-The React application is configured for deployment on [Vercel](https://vercel.com/).
+
+The React application is configured for deployment on [Vercel](https://habit-tracker-olive-six.vercel.app/).
+
 1. Connect the GitHub repository to a Vercel project.
 2. Framework preset: **Vite**.
 3. Build command:
    ```bash
    npm run build
    ```
-4. Add the `VITE_API_BASE_URL` environment variable pointing to the Render backend URL (e.g., `https://your-backend.onrender.com/api`).
+4. Add the `VITE_API_BASE_URL` environment variable pointing to the Render backend URL ( `https://habit-tracker-edz0.onrender.com/`).
 
 ---
 
-##  Support
+## Support
 
 For questions or issues:
 
 **Student:** Blessing Oluwapelumi James  
 **Matric No:** 92134091  
-**Email:** [your-email@example.com]  
-**GitHub:** [github.com/yourusername/habit-tracker]
+**Email:** blessing-oluwapelumi.james@iu-study.org
+**GitHub:** [github.com/DuoDduo/habit-tracker](https://github.com/DuoDduo/habit-tracker)
 
 ---
 
-##  License
+## License
 
 MIT License - See LICENSE file for details
 
 ---
 
-**Last Updated:** January 17, 2026  
-**Version:** 1.0.0  
-**Status:**  Ready for Phase 3 Submission
+**Last Updated:** March 25, 2026  
+**Version:** 1.2.0 (Premium Achievement Engine)
+**Status:** Final Submission Ready - Optimized for Academic Review
 
 ---
 
-##  Quick Start Commands
+## Quick Start Commands
 
 ```bash
 # Backend

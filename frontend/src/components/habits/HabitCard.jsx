@@ -50,7 +50,7 @@ export const HabitCard = ({ habit, onCheckOff, onDelete }) => {
   };
 
   return (
-    <Card hover className="relative group overflow-hidden border border-slate-100 shadow-sm hover:shadow-2xl transition-all duration-500 bg-white rounded-3xl">
+    <Card hover className="relative group overflow-hidden border border-slate-100 shadow-sm card-hover bg-white rounded-[2rem]">
       {/* Decorative background glow for 'New' habits */}
       {isNew && (
         <div className="absolute -top-12 -right-12 w-24 h-24 bg-emerald-500/10 blur-3xl rounded-full" />
@@ -71,7 +71,7 @@ export const HabitCard = ({ habit, onCheckOff, onDelete }) => {
             <div className="flex items-center flex-wrap gap-2">
               {isNew && (
                 <span className="flex items-center gap-1 text-[10px] bg-emerald-100 text-emerald-700 px-2.5 py-1 rounded-full font-black uppercase tracking-tighter border border-emerald-200 animate-pulse">
-                  <Sparkles size={10} strokeWidth={3} /> NEW NODE
+                  <Sparkles size={10} strokeWidth={3} /> NEW HABIT
                 </span>
               )}
               
@@ -98,11 +98,11 @@ export const HabitCard = ({ habit, onCheckOff, onDelete }) => {
               )}
             </div>
 
-            {/* System Metrics Dashboard (Stats) */}
-            <div className="grid grid-cols-3 gap-1 p-1 bg-slate-50/50 rounded-2xl border border-slate-100">
-              <div className="flex flex-col items-center justify-center py-3 bg-white rounded-xl shadow-sm border border-slate-100">
+            {/* Progress Metrics Hub */}
+            <div className="grid grid-cols-3 gap-1 p-1 bg-slate-50/50 rounded-2xl border border-slate-100 glass">
+              <div className="flex flex-col items-center justify-center py-3 bg-white/80 backdrop-blur-md rounded-xl shadow-sm border border-slate-100/50">
                 <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Streak</span>
-                <div className={`flex items-center gap-1 text-lg font-black ${habit.is_broken ? 'text-slate-300' : 'text-emerald-500'}`}>
+                <div className={`flex items-center gap-1 text-lg font-black ${habit.is_broken ? 'text-slate-300' : 'text-blue-600'}`}>
                   <Flame size={16} fill={habit.is_broken ? "none" : "currentColor"} />
                   {habit.current_streak}
                 </div>
@@ -113,7 +113,7 @@ export const HabitCard = ({ habit, onCheckOff, onDelete }) => {
               </div>
               <div className="flex flex-col items-center justify-center py-3">
                 <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1">Total</span>
-                <span className="text-lg font-black text-indigo-500">{habit.completion_count}</span>
+                <span className="text-lg font-black text-blue-600">{habit.completion_count}</span>
               </div>
             </div>
           </div>
@@ -138,7 +138,7 @@ export const HabitCard = ({ habit, onCheckOff, onDelete }) => {
               ) : (
                 <>
                   <Check className="text-white" size={36} strokeWidth={3} />
-                  <span className="text-[9px] text-white font-black uppercase mt-1 hidden lg:block tracking-widest">Commit</span>
+                  <span className="text-[9px] text-white font-black uppercase mt-1 hidden lg:block tracking-widest">Done</span>
                 </>
               )}
             </button>
@@ -147,9 +147,9 @@ export const HabitCard = ({ habit, onCheckOff, onDelete }) => {
               onClick={handleDelete}
               disabled={isChecking || isDeleting}
               className="p-3 text-slate-300 hover:text-red-500 hover:bg-red-50 rounded-2xl transition-all sm:opacity-0 group-hover:opacity-100 focus:opacity-100"
-              title="Terminate Node"
+              title="Delete Habit"
             >
-              <Trash2 size={20} />
+               <Trash2 size={20} />
             </button>
           </div>
         </div>
@@ -170,19 +170,19 @@ export const HabitCard = ({ habit, onCheckOff, onDelete }) => {
         <div className="mt-6 pt-5 border-t border-slate-50 flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-2 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
               <Calendar size={14} className="text-slate-300" />
-              <span>Initialized {new Date(habit.created_at).toLocaleDateString()}</span>
+              <span>Started {new Date(habit.created_at).toLocaleDateString()}</span>
             </div>
             
             <div className="flex items-center gap-3">
-              <span className="text-[9px] font-black text-slate-300 uppercase tracking-widest">Integrity Check</span>
-              <div className="flex gap-1.5 p-1.5 bg-slate-50 rounded-full">
+              <span className="text-[9px] font-black text-slate-300 uppercase tracking-widest">Performance Scale</span>
+              <div className="flex gap-1.5 p-1.5 bg-slate-100 rounded-full border border-slate-200/50">
                 {[...Array(5)].map((_, i) => (
                   <div 
                     key={i} 
                     className={`w-2.5 h-1.5 rounded-full transition-all duration-500 ${
                       i < 3 
-                        ? 'bg-indigo-500 shadow-[0_0_8px_rgba(79,70,229,0.4)]' 
-                        : 'bg-slate-200'
+                        ? 'bg-blue-600 shadow-[0_0_8px_rgba(37,99,235,0.3)]' 
+                        : 'bg-slate-300'
                     }`} 
                   />
                 ))}

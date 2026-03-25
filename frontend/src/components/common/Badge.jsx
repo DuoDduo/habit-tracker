@@ -25,7 +25,6 @@ export const Badge = ({
         py-0.5 
         rounded-md 
         text-[10px] 
-        font-mono 
         font-bold 
         uppercase 
         tracking-wider 

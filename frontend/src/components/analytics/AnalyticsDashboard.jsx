@@ -38,8 +38,8 @@ export const AnalyticsDashboard = ({ analytics, loading, error, onRetry }) => {
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 px-1">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
-            <h2 className="text-2xl font-extrabold text-gray-900 tracking-tight transition-all">
-              Performance Insights
+            <h2 className="text-2xl font-black text-slate-900 tracking-tight transition-all">
+              Your Growth Analytics
             </h2>
             <div className="flex items-center gap-1.5 text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md border border-blue-100 uppercase tracking-widest">
               <Activity size={12} className="animate-pulse" />
@@ -47,7 +47,7 @@ export const AnalyticsDashboard = ({ analytics, loading, error, onRetry }) => {
             </div>
           </div>
           <p className="text-sm text-gray-500 max-w-md">
-            Detailed breakdown of your habit consistency and system engagement.
+            Detailed breakdown of your habit consistency and engagement.
           </p>
         </div>
 
@@ -57,8 +57,8 @@ export const AnalyticsDashboard = ({ analytics, loading, error, onRetry }) => {
             <Zap size={20} fill="currentColor" />
           </div>
           <div>
-            <p className="text-[10px] font-bold text-gray-400 uppercase leading-none mb-1">Consistency Score</p>
-            <p className="text-lg font-bold text-gray-800 leading-none">{completionRate}%</p>
+            <p className="text-[10px] font-bold text-slate-400 uppercase leading-none mb-1">Consistency Score</p>
+            <p className="text-lg font-bold text-blue-600 leading-none">{completionRate}%</p>
           </div>
         </div>
       </div>
@@ -66,52 +66,52 @@ export const AnalyticsDashboard = ({ analytics, loading, error, onRetry }) => {
       {/* 2. Primary Metrics Grid */}
       {/* Responsive Breakpoints: 1 col (mobile), 2 col (tablet), 4 col (desktop) */}
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
-        <div className="hover:scale-[1.02] transition-transform duration-300">
+        <div className="animate-fade-in-up [animation-delay:100ms]">
           <StatCard
             icon={Target}
             label="Total Habits"
             value={analytics.total_habits || 0}
             color="blue"
-            subtitle="Active objectives"
+            subtitle="Your active goals"
           />
         </div>
         
-        <div className="hover:scale-[1.02] transition-transform duration-300">
+        <div className="animate-fade-in-up [animation-delay:200ms]">
           <StatCard
             icon={TrendingUp}
-            label="Longest Streak"
+            label="Best Streak"
             value={`${analytics.longest_streak || 0}d`}
             color="green"
-            subtitle="All-time record"
+            subtitle="Personal record"
           />
         </div>
         
-        <div className="hover:scale-[1.02] transition-transform duration-300">
+        <div className="animate-fade-in-up [animation-delay:300ms]">
           <StatCard
             icon={Calendar}
-            label="Daily Habits"
+            label="Daily Tasks"
             value={analytics.daily_habits || 0}
             color="purple"
-            subtitle="High frequency"
+            subtitle="Regular routines"
           />
         </div>
         
-        <div className="hover:scale-[1.02] transition-transform duration-300">
+        <div className="animate-fade-in-up [animation-delay:400ms]">
           <StatCard
             icon={BarChart3}
-            label="Weekly Habits"
+            label="Weekly Goals"
             value={analytics.weekly_habits || 0}
             color="orange"
-            subtitle="Strategic pacing"
+            subtitle="Strategic habits"
           />
         </div>
       </div>
 
       {/* 3. System Info Footer (Metric ID) */}
       <div className="pt-4 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-3 opacity-60 hover:opacity-100 transition-opacity">
-        <div className="flex items-center gap-2 text-[10px] font-mono text-gray-400">
+        <div className="flex items-center gap-2 text-[10px] font-mono text-slate-400">
           <Info size={12} />
-          SYSTEM_UID: 92134091 // SHARD_A
+          MEMBER_ID: 92134091 // Local Storage
         </div>
         <p className="text-[10px] font-medium text-gray-400 italic">
           Last synced: {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}

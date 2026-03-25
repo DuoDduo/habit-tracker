@@ -16,7 +16,7 @@ export const Card = ({
   
   return (
     <div
-      className={`bg-white rounded-xl shadow-sm ${hoverClasses} ${padding} transition-shadow duration-200 ${className}`}
+      className={`card ${padding} ${className}`}
       {...props}
     >
       {children}

@@ -4,7 +4,7 @@ Author: Blessing Oluwapelumi James
 Matric No: 92134091
 
 Tests business logic in HabitService and AnalyticsService.
-Total: 15 tests
+Total: 12 tests
 """
 
 import pytest
