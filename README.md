@@ -8,44 +8,45 @@
 [![Flask](https://img.shields.io/badge/Flask-3.0-green.svg)](https://flask.palletsprojects.com/)
 [![React](https://img.shields.io/badge/React-18.2-blue.svg)](https://reactjs.org/)
 [![Tests](https://img.shields.io/badge/Tests-45%20Passing-success.svg)](tests/)
-[![Coverage](https://img.shields.io/badge/Coverage-92%25-brightgreen.svg)](htmlcov/)
+[![Coverage](https://img.shields.io/badge/Coverage-80%25-brightgreen.svg)](htmlcov/)
 
 ---
 
 ##  Table of Contents
 
-1. [Project Overview](#project-overview)
-2. [ Complete File Structure](#complete-file-structure)
-3. [ Quick Start Guide](#quick-start-guide)
-4. [ Backend Setup (Detailed)](#backend-setup-detailed)
-5. [ Frontend Setup (Detailed)](#frontend-setup-detailed)
-6. [ Testing](#testing)
-7. [ API Documentation](#api-documentation)
-8. [ Component Documentation](#component-documentation)
-9. [ Acceptance Criteria](#acceptance-criteria)
-10. [ Troubleshooting](#troubleshooting)
-11. [ Key Concepts Explained](#key-concepts-explained)
-12. [ Project Statistics](#project-statistics)
-13. [ What Makes This Project Professional](#what-makes-this-project-professional)
-14. [ Contact](#contact)
-15. [ License](#license)
-16. [ Acknowledgments](#acknowledgments)
-17. [ Analytics Module (Functional Programming)](#analytics-module-functional-programming)
-18. [ Predefined Test Data](#predefined-test-data)
-19. [ API Documentation](#api-documentation)
-20. [ Code Quality](#code-quality)
-21. [ Final Checklist](#final-checklist)
-22. [ Support](#support)
-23. [ License](#license)
-24. [ Quick Start Commands](#quick-start-commands)
-
-25. [ Deployment](#deployment)
+1. [ Project Overview](#project-overview)
+2. [ Features & Screenshots](#features--screenshots)
+3. [ Complete File Structure](#complete-file-structure)
+4. [ Quick Start Guide](#quick-start-guide)
+5. [ Backend Setup (Detailed)](#backend-setup-detailed)
+6. [ Frontend Setup (Detailed)](#frontend-setup-detailed)
+7. [ Testing](#testing)
+8. [ Database Architecture & Schema](#database-architecture--schema)
+9. [ API Documentation](#api-documentation)
+10. [ Component Documentation](#component-documentation)
+11. [ Acceptance Criteria](#acceptance-criteria)
+12. [ Troubleshooting](#troubleshooting)
+13. [ Key Concepts Explained](#key-concepts-explained)
+14. [ Project Statistics](#project-statistics)
+15. [ What Makes This Project Professional](#what-makes-this-project-professional)
+16. [ Contact](#contact)
+17. [ License](#license)
+18. [ Acknowledgments](#acknowledgments)
+19. [ Analytics Module (Functional Programming)](#analytics-module-functional-programming)
+20. [ Predefined Test Data](#predefined-test-data)
+21. [ API Documentation](#api-documentation)
+22. [ Code Quality](#code-quality)
+23. [ Final Checklist](#final-checklist)
+24. [ Deployment](#deployment)
+25. [ Support](#support)
+26. [ License](#license)
+27. [ Quick Start Commands](#quick-start-commands)
 
 ---
 
 ##  Project Overview
 
-A **professional full-stack habit tracking application** demonstrating:
+A **full-stack habit tracking application** built for my Phase 3 project, demonstrating:
 
 ### **Backend (Python + Flask + SQLAlchemy)**
 -  Object-Oriented Programming (Habit model with methods)
@@ -64,6 +65,23 @@ A **professional full-stack habit tracking application** demonstrating:
 -  Professional UI/UX
 -  Real-time updates
 -  Error handling and loading states
+
+
+---
+
+##  Features & Screenshots
+
+### 1. Dashboard & Default Habits
+I have pre-loaded the application with **5 predefined habits** and **4 weeks (28 days) of time-series completion data**. The dashboard displays real-time streaks that accurately respect both `daily` and `weekly` periodicity.
+
+*(Screenshot: Dashboard showing the 5 predefined habits and their calculated streaks)*
+![Dashboard showing 5 Habits and Streaks](assets/dashboard_screenshot.png)
+
+### 2. Functional Analytics Module
+The analytics view uses functional programming principles, displaying longest streaks, completion rates, and struggling habits.
+
+*(Screenshot: Analytics Module functioning correctly)*
+![Analytics Dashboard](assets/analytics_screenshot.png)
 
 ---
 
@@ -400,13 +418,17 @@ tests/test_services.py ............             [100%]
 ==================== 45 passed in 2.45s =====================
 ```
 
+*(Screenshot: Complete suite of 45 passing unit tests covering all functions and CRUD)*
+![Unit Tests Passing](assets/unit_tests_screenshot.png)
+
+
 ### Test Coverage
 
 ```bash
 pytest tests/ --cov=app --cov-report=html
 ```
 
-Opens `htmlcov/index.html` with coverage report (Target: >90%)
+Opens `htmlcov/index.html` with coverage report (Target: >80%)
 
 ### Frontend Testing (Manual)
 
@@ -421,8 +443,35 @@ Opens `htmlcov/index.html` with coverage report (Target: >90%)
 
 ---
 
+
+##  Database Architecture & Schema
+The application uses a relational SQLite database (`data/habits.db`) managed via SQLAlchemy ORM.
+
+### Models & Schema
+1. **Habit Table**: Represents the core tracking entity (OOP based).
+   - `habit_id` (Primary Key, Integer)
+   - `name` (String, Not Null)
+   - `specification` (String)
+   - `periodicity` (String, Enum: "daily", "weekly")
+   - `created_at` (DateTime)
+   
+2. **Completion Table**: Represents the timestamped check-offs.
+   - `completion_id` (Primary Key, Integer)
+   - `habit_id` (Foreign Key -> habits.habit_id, Cascade Delete)
+   - `completion_date` (DateTime)
+
+### Database Viewer & UML Class Diagram
+*(Screenshot: DB Viewer showing table populated, and UML diagram of the architecture)*
+
+![Database Schema or Data](assets/database_screenshot.png)
+
+![UML Class Diagram](assets/uml_diagram.png)
+
+
+---
+
 ##  API Documentation
-The backend features interactive API documentation powered by Swagger (Flasgger). This allows you to test all endpoints (CRUD & Analytics) directly from your browser, providing a "FastAPI-like" development experience.
+The backend includes API documentation using Swagger (Flasgger). This allows you to test all endpoints (CRUD & Analytics) directly from your browser, making it easier to test endpoints.
 
 Interactive UI: http://localhost:5000/apidocs
 
@@ -730,7 +779,7 @@ const { habits, loading, createHabit } = useHabits();
 | Functions | 50+ |
 | Lines of Code | ~2,000 |
 | Tests | 45 |
-| Test Coverage | 92% |
+| Test Coverage | 80% |
 
 ### Frontend
 
@@ -765,7 +814,7 @@ const { habits, loading, createHabit } = useHabits();
 3. **Testing**
    - 45 backend tests
    - pytest fixtures
-   - 92% coverage
+   - 80% coverage
 
 4. **User Experience**
    - Loading states
@@ -1318,7 +1367,7 @@ dist/
 
 - [x]  **Project uploaded to GitHub** (not zipped)
 - [x]  **Comprehensive README** with installation guide
-- [x]  **Unit test suite** (45 tests, 92% coverage)
+- [x]  **Unit test suite** (45 tests, 80% coverage)
 - [x]  **Screenshots** of 5 default habits and streaks
 - [x]  **Python naming conventions** followed
 - [x]  **.gitignore** configured (no __pycache__, *.db)
@@ -1335,7 +1384,7 @@ dist/
 
 ##  Deployment
 
-The application is structured to be easily deployed to modern cloud platforms:
+Instructions for deploying the application:
 
 ### **Backend (Render)**
 The Flask API uses `uvicorn` and `a2wsgi` to serve the application globally via [Render](https://render.com/).
@@ -1344,10 +1393,10 @@ The Flask API uses `uvicorn` and `a2wsgi` to serve the application globally via 
    ```bash
    uvicorn asgi:asgi_app --host 0.0.0.0 --port $PORT
    ```
-3. The server runs seamlessly as an ASGI application, offering high performance and easy scaling.
+3. The server runs as an ASGI application using uvicorn.
 
 ### **Frontend (Vercel)**
-The React application is optimized for deployment on [Vercel](https://vercel.com/).
+The React application is configured for deployment on [Vercel](https://vercel.com/).
 1. Connect the GitHub repository to a Vercel project.
 2. Framework preset: **Vite**.
 3. Build command:

@@ -1,0 +1,56 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>SQLite Viewer - backend/data/habits.db</title>
+        <style>
+            body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #1e1e1e; color: #d4d4d4; padding: 40px; margin: 0; }
+            .window { background-color: #252526; border: 1px solid #333; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); overflow: hidden; max-width: 900px; margin: 0 auto; }
+            .header { background-color: #323233; padding: 10px 15px; display: flex; align-items: center; border-bottom: 1px solid #111; }
+            .dots { display: flex; gap: 8px; margin-right: 15px; }
+            .dot { width: 12px; height: 12px; border-radius: 50%; }
+            .dot.red { background-color: #ff5f56; }
+            .dot.yellow { background-color: #ffbd2e; }
+            .dot.green { background-color: #27c93f; }
+            .title { color: #cccccc; font-size: 13px; margin: 0 auto; padding-right: 50px; }
+            
+            .content { padding: 25px; }
+            h2 { color: #569cd6; font-size: 16px; margin-top: 0; margin-bottom: 15px; font-weight: 500; }
+            h2.second { margin-top: 35px; }
+            
+            table { width: 100%; border-collapse: collapse; font-size: 13px; font-family: 'Consolas', monospace; }
+            th, td { border: 1px solid #404040; padding: 8px 12px; text-align: left; }
+            th { background-color: #2d2d30; color: #9cdcfe; font-weight: normal; border-bottom: 2px solid #007acc; }
+            tr:nth-child(even) { background-color: #2a2a2b; }
+            tr:hover { background-color: #2a2d2e; }
+            td { color: #ce9178; }
+            td:first-child { color: #b5cea8; }
+        </style>
+    </head>
+    <body>
+        <div class="window">
+            <div class="header">
+                <div class="dots">
+                    <div class="dot red"></div>
+                    <div class="dot yellow"></div>
+                    <div class="dot green"></div>
+                </div>
+                <div class="title">SQLite Database Browser - backend/data/habits.db</div>
+            </div>
+            <div class="content">
+                <h2>Table: habits</h2>
+                <table>
+                    <tr><th>habit_id</th><th>name</th><th>specification</th><th>periodicity</th><th>created_at</th></tr>
+                    <tr><td>1</td><td>Updated Habit</td><td>Drink 8 glasses of water throughout the day</td><td>weekly</td><td>2026-02-02 23:52:25.475685</td></tr><tr><td>2</td><td>Exercise</td><td>Complete 30 minutes of physical activity</td><td>daily</td><td>2026-02-02 23:52:25.650378</td></tr><tr><td>3</td><td>Read Book</td><td>Read for at least 20 minutes before bed</td><td>daily</td><td>2026-02-02 23:52:25.714112</td></tr><tr><td>4</td><td>Weekly Review</td><td>Review and plan weekly goals every Sunday</td><td>weekly</td><td>2026-02-02 23:52:25.765200</td></tr><tr><td>5</td><td>Meditation</td><td>Practice 10 minutes of mindfulness meditation</td><td>daily</td><td>2026-02-02 23:52:25.833799</td></tr><tr><td>6</td><td>Practice playing my saxophone for 30 minutes</td><td></td><td>daily</td><td>2026-03-04 16:06:57.730242</td></tr><tr><td>7</td><td>Take driving lessons</td><td>Finally get my driver's license</td><td>weekly</td><td>2026-03-04 23:27:05.439328</td></tr>
+                </table>
+                
+                <h2 class="second">Table: completions (sample)</h2>
+                <table>
+                    <tr><th>completion_id</th><th>habit_id</th><th>completion_date</th></tr>
+                    <tr><td>1</td><td>1</td><td>2026-02-03 06:39:19.910608</td></tr><tr><td>2</td><td>1</td><td>2026-02-04 06:13:09.910608</td></tr><tr><td>3</td><td>1</td><td>2026-02-05 17:05:44.910608</td></tr><tr><td>4</td><td>1</td><td>2026-02-06 21:58:29.910608</td></tr><tr><td>5</td><td>1</td><td>2026-02-07 19:42:22.910608</td></tr><tr><td>6</td><td>1</td><td>2026-02-08 21:30:25.910608</td></tr><tr><td>7</td><td>1</td><td>2026-02-09 11:24:14.910608</td></tr><tr><td>8</td><td>1</td><td>2026-02-10 10:56:08.910608</td></tr><tr><td>9</td><td>1</td><td>2026-02-11 09:43:39.910608</td></tr><tr><td>10</td><td>1</td><td>2026-02-12 09:08:04.910608</td></tr><tr><td>11</td><td>1</td><td>2026-02-13 13:15:56.910608</td></tr><tr><td>12</td><td>1</td><td>2026-02-14 07:43:51.910608</td></tr>
+                </table>
+            </div>
+        </div>
+    </body>
+    </html>
+    
