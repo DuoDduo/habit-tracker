@@ -39,6 +39,8 @@
 23. [ License](#license)
 24. [ Quick Start Commands](#quick-start-commands)
 
+25. [ Deployment](#deployment)
+
 ---
 
 ##  Project Overview
@@ -1327,6 +1329,32 @@ dist/
 - [x]  **4 weeks of predefined data**
 - [x]  **Database schema documented**
 - [x]  **Test coverage report** included
+
+---
+
+
+##  Deployment
+
+The application is structured to be easily deployed to modern cloud platforms:
+
+### **Backend (Render)**
+The Flask API uses `uvicorn` and `a2wsgi` to serve the application globally via [Render](https://render.com/).
+1. Provide the environment variables (e.g., `DATABASE_URL` if using Postgres instead of SQLite).
+2. Set the start command:
+   ```bash
+   uvicorn asgi:asgi_app --host 0.0.0.0 --port $PORT
+   ```
+3. The server runs seamlessly as an ASGI application, offering high performance and easy scaling.
+
+### **Frontend (Vercel)**
+The React application is optimized for deployment on [Vercel](https://vercel.com/).
+1. Connect the GitHub repository to a Vercel project.
+2. Framework preset: **Vite**.
+3. Build command:
+   ```bash
+   npm run build
+   ```
+4. Add the `VITE_API_BASE_URL` environment variable pointing to the Render backend URL (e.g., `https://your-backend.onrender.com/api`).
 
 ---
 
