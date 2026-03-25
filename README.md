@@ -148,53 +148,58 @@ habit-tracker/
 │   │   │   └── habitApi.js            # Axios API client
 │   │   │
 │   │   ├── components/
-│   │   │   │   ├── Header.jsx
-│   │   │   │   ├── Footer.jsx
-│   │   │   │   ├── Container.jsx
-│   │   │   │   └── Sidebar.jsx
-│   │   │   │
-│   │   │   ├── marketing/             # Landing & Marketing
-│   │   │   │   └── Landing.jsx
-│   │   │   │
-│   │   │   ├── common/                # Reusable components
-│   │   │   │   ├── Button.jsx
-│   │   │   │   ├── Card.jsx
-│   │   │   │   ├── Modal.jsx
-│   │   │   │   ├── Badge.jsx
-│   │   │   │   ├── Loading.jsx
-│   │   │   │   ├── Illustrations.jsx
-│   │   │   │   └── ErrorMessage.jsx
-│   │   │   │
-│   │   │   ├── habits/                # Habit-specific components
-│   │   │   │   ├── HabitCard.jsx
-│   │   │   │   ├── HabitList.jsx
-│   │   │   │   ├── HabitForm.jsx
-│   │   │   │   ├── CreateHabitModal.jsx
-│   │   │   │   ├── HabitFilters.jsx
-│   │   │   │   └── StreakDisplay.jsx
-│   │   │   │
 │   │   │   ├── analytics/             # Analytics components
 │   │   │   │   ├── AnalyticsCard.jsx
 │   │   │   │   ├── AnalyticsDashboard.jsx
 │   │   │   │   └── StatCard.jsx
 │   │   │   │
-│   │   │   └── ui/                    # UI elements
-│   │   │       ├── Icon.jsx
-│   │   │       └── EmptyState.jsx
+│   │   │   ├── auth/                  # Authentication components
+│   │   │   │   └── Login.jsx
+│   │   │   │
+│   │   │   ├── common/                # Reusable components
+│   │   │   │   ├── Badge.jsx
+│   │   │   │   ├── Button.jsx
+│   │   │   │   ├── Card.jsx
+│   │   │   │   ├── ErrorMessage.jsx
+│   │   │   │   ├── Illustrations.jsx
+│   │   │   │   ├── Loading.jsx
+│   │   │   │   └── Modal.jsx
+│   │   │   │
+│   │   │   ├── habits/                # Habit management
+│   │   │   │   ├── CreateHabitModal.jsx
+│   │   │   │   ├── HabitCard.jsx
+│   │   │   │   ├── HabitFilters.jsx
+│   │   │   │   ├── HabitForm.jsx
+│   │   │   │   ├── HabitList.jsx
+│   │   │   │   └── StreakDisplay.jsx
+│   │   │   │
+│   │   │   ├── layout/                # Page structure
+│   │   │   │   ├── Container.jsx
+│   │   │   │   ├── Footer.jsx
+│   │   │   │   ├── Header.jsx
+│   │   │   │   └── Sidebar.jsx
+│   │   │   │
+│   │   │   ├── marketing/             # Landing experience
+│   │   │   │   └── Landing.jsx
+│   │   │   │
+│   │   │   └── ui/                    # Specialized elements
+│   │   │       ├── EmptyState.jsx
+│   │   │       └── Icon.jsx
 │   │   │
-│   │   ├── hooks/                     # Custom React hooks
-│   │   │   ├── useHabits.js
+│   │   ├── hooks/                     # Custom hooks
 │   │   │   ├── useAnalytics.js
+│   │   │   ├── useHabits.js
 │   │   │   └── useModal.js
 │   │   │
-│   │   ├── utils/                     # Utility functions
+│   │   ├── utils/                     # Helper functions
 │   │   │   ├── constants.js
 │   │   │   ├── formatters.js
 │   │   │   └── validators.js
 │   │   │
-│   │   ├── App.jsx                    # Main app component
-│   │   ├── main.jsx                   # Entry point
-│   │   └── index.css                  # Global styles
+│   │   ├── App.css
+│   │   ├── App.jsx                    # Main entry point
+│   │   ├── index.css                  # Global styles
+│   │   └── main.jsx                   # Vite entry point
 │   │
 │   ├── .env                            # Frontend environment
 │   ├── .gitignore
