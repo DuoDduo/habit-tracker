@@ -14,8 +14,9 @@ from flask_cors import CORS
 # Import global settings
 from app.core.config import settings
 
-# Import database initializer
-from app.db.session import init_db
+# Import database initializer and session factory
+from app.db.session import init_db, SessionLocal
+from app.db.seeds import seed_predefined_habits
 
 # Import API blueprints for registering endpoints
 from app.api.endpoints.habits import habits_bp
@@ -51,6 +52,10 @@ def create_app() -> Flask:
     
     # Initialize database tables
     init_db()  # Creates tables if they do not exist yet
+    
+    # Auto-seed the database if empty
+    with SessionLocal() as db:
+        seed_predefined_habits(db)
     
     # Register API blueprints
     # Each blueprint contains its own routes and handlers
