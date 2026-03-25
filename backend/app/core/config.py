@@ -57,12 +57,7 @@ class Settings(BaseSettings):
     # CORS configuration
     # List of allowed frontend origins for cross-origin requests
     # Important for browser security when frontend and backend run on different ports
-    CORS_ORIGINS: List[str] = [
-        "http://localhost:3000",
-        "http://localhost:8000",
-        "http://127.0.0.1:3000",
-        "http://127.0.0.1:8000"
-    ]
+    CORS_ORIGINS: List[str] = ["*"]
     
 
     # Pydantic model configuration
