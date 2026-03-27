@@ -14,33 +14,29 @@
 
 ## Table of Contents
 
-1. [ Project Overview](#project-overview)
-2. [ Features & Screenshots](#features--screenshots)
-3. [ Complete File Structure](#complete-file-structure)
-4. [ Quick Start Guide](#quick-start-guide)
-5. [ Backend Setup (Detailed)](#backend-setup-detailed)
-6. [ Frontend Setup (Detailed)](#frontend-setup-detailed)
-7. [ Testing](#testing)
-8. [ Database Architecture & Schema](#database-architecture--schema)
-9. [ API Documentation](#api-documentation)
-10. [ Component Documentation](#component-documentation)
-11. [ Acceptance Criteria](#acceptance-criteria)
-12. [ Troubleshooting](#troubleshooting)
-13. [ Key Concepts Explained](#key-concepts-explained)
-14. [ Project Statistics](#project-statistics)
-15. [ What Makes This Project Professional](#what-makes-this-project-professional)
-16. [ Contact](#contact)
-17. [ License](#license)
-18. [ Acknowledgments](#acknowledgments)
-19. [ Analytics Module (Functional Programming)](#analytics-module-functional-programming)
-20. [ Predefined Test Data](#predefined-test-data)
-21. [ API Documentation](#api-documentation)
-22. [ Code Quality](#code-quality)
-23. [ Final Checklist](#final-checklist)
-24. [ Deployment](#deployment)
-25. [ Support](#support)
-26. [ License](#license)
-27. [ Quick Start Commands](#quick-start-commands)
+1. [Project Overview](#project-overview)
+2. [Features & Highlights](#features--highlights)
+3. [Complete File Structure](#complete-file-structure)
+4. [Quick Start Guide](#quick-start-guide)
+5. [Backend Setup (Detailed)](#backend-setup-detailed)
+6. [Frontend Setup (Detailed)](#frontend-setup-detailed)
+7. [Testing](#testing)
+8. [Database Architecture & Schema](#database-architecture--schema)
+9. [API Documentation](#api-documentation)
+10. [Component Documentation](#component-documentation)
+11. [Acceptance Criteria](#acceptance-criteria)
+12. [Troubleshooting](#troubleshooting)
+13. [Key Concepts Explained](#key-concepts-explained)
+14. [Project Statistics](#project-statistics)
+15. [What Makes This Project Professional](#what-makes-this-project-professional)
+16. [Analytics Module (Functional Programming)](#analytics-module-functional-programming)
+17. [Predefined Test Data](#predefined-test-data)
+18. [Code Quality](#code-quality)
+19. [Final Checklist](#final-checklist)
+20. [Deployment](#deployment)
+21. [Support & Contact](#support--contact)
+22. [Acknowledgments](#acknowledgments)
+23. [License](#license)
 
 ---
 
@@ -871,41 +867,7 @@ const { habits, loading, createHabit } = useHabits();
 
 ---
 
-## Contact
-
-**Student:** Blessing Oluwapelumi James  
-**Matriculation Number:** 92134091  
-**Course:** Object-Oriented and Functional Programming with Python
-
----
-
-## License
-
-This project is submitted as academic coursework and is not licensed for redistribution.
-
----
-
-## Acknowledgments
-
-- **Flask** - Web framework
-- **React** - UI library
-- **Tailwind CSS** - Styling
-- **SQLAlchemy** - ORM
-- **Pydantic** - Validation
-- **Vite** - Build tool
-
----
-
-**Last Updated:** March 25, 2026  
-**Version:** 1.0.0
-
-**Project Complete & Ready for Submission!** Each with realistic completion patterns
-
-```
-
----
-
-##  Analytics Module (Functional Programming)
+## Analytics Module (Functional Programming)
 
 ### Overview
 
@@ -955,7 +917,7 @@ def get_habits_by_periodicity(habits: List[Habit], period: str) -> List[Habit]:
 def test_filter_by_periodicity():
     # Input: 5 habits (4 daily, 1 weekly)
     result = get_habits_by_periodicity(habits, "daily")
-    assert len(result) == 4  #  PASSES
+    assert len(result) == 4  # PASSES
 ```
 
 #### 2. Find Longest Streak (All Habits)
@@ -990,7 +952,7 @@ def find_longest_streak_all(habits: List[Habit]) -> int:
 def test_longest_streak_all():
     # Input: Habits with streaks [12, 8, 5, 4, 9]
     result = find_longest_streak_all(habits)
-    assert result == 12  #  PASSES
+    assert result == 12  # PASSES
 ```
 
 #### 3. Find Longest Streak (Single Habit)
@@ -1021,7 +983,7 @@ def find_longest_streak_for_habit(habit: Habit) -> int:
 ```python
 def test_longest_streak_single():
     result = find_longest_streak_for_habit(drink_water_habit)
-    assert result == 12  #  PASSES
+    assert result == 12  # PASSES
 ```
 
 #### 4. Get All Tracked Habits
@@ -1051,8 +1013,8 @@ def get_all_tracked_habits(habits: List[Habit]) -> List[str]:
 ```python
 def test_get_tracked_habits():
     result = get_all_tracked_habits(habits)
-    assert len(result) == 5  #  PASSES
-    assert "Drink Water" in result  #  PASSES
+    assert len(result) == 5  # PASSES
+    assert "Drink Water" in result  # PASSES
 ```
 
 #### 5. Get Struggling Habits
@@ -1088,8 +1050,8 @@ def get_struggling_habits(habits: List[Habit], threshold: int = 3) -> List[Habit
 def test_struggling_habits():
     result = get_struggling_habits(habits, threshold=3)
     # "Read Book" has streak = 2
-    assert len(result) == 1  #  PASSES
-    assert result[0].name == "Read Book"  #  PASSES
+    assert len(result) == 1  # PASSES
+    assert result[0].name == "Read Book"  # PASSES
 ```
 
 #### 6. Count by Periodicity
@@ -1122,8 +1084,8 @@ def count_by_periodicity(habits: List[Habit]) -> dict:
 ```python
 def test_count_by_periodicity():
     result = count_by_periodicity(habits)
-    assert result["daily"] == 4  #  PASSES
-    assert result["weekly"] == 1  #  PASSES
+    assert result["daily"] == 4  # PASSES
+    assert result["weekly"] == 1  # PASSES
 ```
 
 ### Analytics API Endpoints
@@ -1268,36 +1230,7 @@ sqlite3 data/habits.db "SELECT COUNT(*) FROM completions;"
 curl http://localhost:5000/api/habits | python -m json.tool
 ```
 
----
 
-## API Documentation
-
-### Base URL
-
-```
-http://localhost:5000/api
-```
-
-### Endpoints Summary
-
-| Method        | Endpoint                    | Description            |
-| ------------- | --------------------------- | ---------------------- |
-| **Habits**    |
-| GET           | `/habits`                   | List all habits        |
-| POST          | `/habits`                   | Create new habit       |
-| GET           | `/habits/:id`               | Get specific habit     |
-| DELETE        | `/habits/:id`               | Delete habit           |
-| POST          | `/habits/:id/check-off`     | Mark as completed      |
-| **Analytics** |
-| GET           | `/analytics/longest-streak` | Overall longest streak |
-| GET           | `/analytics/by-periodicity` | Filter by period       |
-| GET           | `/analytics/tracked-habits` | List habit names       |
-| GET           | `/analytics/struggling`     | Low-streak habits      |
-| GET           | `/analytics/summary`        | Complete statistics    |
-
-### Detailed Endpoint Documentation
-
-The API is documented via Flasgger and can be accessed at `/apidocs` when the server is running.
 
 ---
 
@@ -1433,7 +1366,7 @@ dist/
 - [x] **Unit test suite** (45 tests, 80% coverage)
 - [x] **Screenshots** of 5 default habits and streaks
 - [x] **Python naming conventions** followed
-- [x] **.gitignore** configured (no **pycache**, \*.db)
+- [x] **.gitignore** configured (no **pycache**, *.db)
 - [x] **Modular structure** (40+ files, logically split)
 - [x] **Code comments** on all functions/classes
 - [x] **Analytics module complete** (all 6 functions)
@@ -1473,44 +1406,35 @@ The React application is configured for deployment on [Vercel](https://habit-tra
 
 ---
 
-## Support
+## Support & Contact
 
 For questions or issues:
 
 **Student:** Blessing Oluwapelumi James  
 **Matric No:** 92134091  
-**Email:** blessing-oluwapelumi.james@iu-study.org
+**Course:** Object-Oriented and Functional Programming with Python  
+**Email:** blessing-oluwapelumi.james@iu-study.org  
 **GitHub:** [github.com/DuoDduo/habit-tracker](https://github.com/DuoDduo/habit-tracker)
+
+---
+
+## Acknowledgments
+
+- **Flask** - Web framework
+- **React** - UI library
+- **Tailwind CSS** - Styling
+- **SQLAlchemy** - ORM
+- **Pydantic** - Validation
+- **Vite** - Build tool
 
 ---
 
 ## License
 
-MIT License - See LICENSE file for details
+This project is submitted as academic coursework and is also licensed under the MIT License - see the LICENSE file for details.
 
 ---
 
 **Last Updated:** March 25, 2026  
-**Version:** 1.2.0 (Premium Achievement Engine)
-**Status:** Final Submission Ready - Optimized for Academic Review
+**Version:** 1.2.0 (Premium Achievement Engine)  
 
----
-
-## Quick Start Commands
-
-```bash
-# Backend
-cd backend && pip install -r requirements.txt
-python generate_test_data.py
-uvicorn asgi:asgi_app --reload --port 5000
-
-# Frontend (new terminal)
-cd frontend && npm install && npm run dev
-
-# Tests
-cd backend && pytest tests/ -v --cov=app
-```
-
-**Application:** http://localhost:3000  
-**API Docs:** http://localhost:5000  
-**Test Coverage:** htmlcov/index.html

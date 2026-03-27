@@ -6,14 +6,14 @@
 
 ---
 
-## 📋 Executive Summary
+## Executive Summary
 **HabitOS: Achievement Engine** is a professional full-stack platform designed for personal growth and behavioral clarity. This project demonstrates high-integrity software engineering by integrating Object-Oriented Programming (OOP) for robust data management and Functional Programming (FP) for its analytics backend, all presented through a premium, animated user interface.
 
 **GitHub Repository:** [https://github.com/DuoDduo/habit-tracker](https://github.com/DuoDduo/habit-tracker)
 
 ---
 
-## 🏗️ Technical Approach & Concept
+## Technical Approach & Concept
 
 ### 1. Unified Paradigm Architecture
 The project leverages a 3-tier architecture (API -> Service -> Model) to ensure strict separation of concerns:
@@ -26,20 +26,20 @@ The backend was optimized for cloud deployment by transitioning from a standard 
 
 ---
 
-## 🏁 Project Retrospective: "The Making Of"
+## Project Retrospective: "The Making Of"
 
-### ✅ Significant Successes
+### Significant Successes
 - **Premium Onboarding Flow:** The implementation of an **Integrated Landing Page** and a dynamic **Identity Management** system transformed the project from a technical demo into a polished product.
 - **Custom Vector Identity:** Developing hand-drawn **SVG illustrations** for the Hero and Landing sections provided a unique, professional aesthetic that rivals modern commercial SaaS platforms.
 - **Data Integrity:** Synchronizing a complex 4-week historical dataset between the SQLite database and the React UI ensured that all analytics are mathematically verified and consistent.
 
-### ⚠️ Challenges & Foreseen Pitfalls
+### Challenges & Foreseen Pitfalls
 - **The "Streak Logic" Complexity:** Calculating accurate streaks for both **daily** and **weekly** habits was an unforeseen pitfall. Logic that worked for days failed for weeks due to timestamp calculations. I overcame this by implementing a reverse-lookup algorithm that detects "completion gaps" rather than just counting consecutive days.
 - **CORS & Cloud Connectivity:** Bridging the communication gap between Vercel (Frontend) and Render (Backend) required careful CORS configuration and environment variable management for production-readiness.
 
 ---
 
-## 🔥 Features & Professional Pride
+## Features & Professional Pride
 
 ### 1. Visual Excellence
 I am particularly proud of the **Blue & White design system**. By prioritizing glassmorphism and smooth motion design, the application achieves a level of polish that emphasizes the "Achievement Engine" philosophy.
@@ -49,7 +49,7 @@ With **45 passing unit tests** and an **80% coverage rate**, the system is incre
 
 ---
 
-## 🛠️ Installation & Setup Manual
+## Installation & Setup Manual
 
 1. **Backend:**
    - `cd backend && pip install -r requirements.txt`
