@@ -61,7 +61,7 @@ Before you begin, ensure you have the following installed:
     ```bash
     python run.py
     ```
-    *The API will be available at:* `http://localhost:5000`
+    *The API will be available at:* `http://localhost:3000`
 
 ---
 
@@ -82,7 +82,7 @@ Before you begin, ensure you have the following installed:
     ```bash
     npm run dev
     ```
-    *The application will be available at:* `http://localhost:5173` (or the port shown in your terminal).
+    *The application will be available at:* `http://localhost:3000` (or the port shown in your terminal).
 
 ---
 
@@ -104,7 +104,7 @@ Before you begin, ensure you have the following installed:
 
 ## 4. Verification
 
-1.  Open `http://localhost:5173`.
+1.  Open `http://localhost:3000`.
 2.  You should see the **HabitOS Landing Page**.
 3.  Click **Get Started**, enter your name, and log in.
 4.  **Important**: You should immediately see the **5 predefined habits** (Drink Water, Exercise, etc.) with 4 weeks of data pre-populated.
